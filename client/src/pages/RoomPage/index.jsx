@@ -4,38 +4,16 @@ import { useEffect, useRef, useState } from "react"
 import rough from 'roughjs';
 
 import "./index.css"
-import { WhiteBoard } from "../../components/Whiteboard"
+import { WhiteBoard } from "../../components/WhiteBoard";
 
 export const RoomPage = ({ user, socket }) => {
     const canvasRef = useRef(null)
     const ctxRef = useRef(null)
 
-    const [tool, setTool] = useState("pencil") // Select tool
+    const [tool, setTool] = useState("line") // Select tool
     const [color, setColor] = useState("black") // select color
     const [elements, setElements] = useState([]) // array of different "drawing events"(elements)
     const [removedElements, setRemovedElements] = useState([]) // array of undo elements
-    const [pencilPath, setPencilPath] = useState([]);
-
-    // useEffect(()=>{
-    //     console.log("drawing");
-    //     console.log(pencilPath);
-    //     // console.log(elements[elements.length - 1]);
-    //     socket.emit("draw", {path: pencilPath})
-    // }, [socket, pencilPath, elements])
-
-    // useEffect(() => {
-    //     // console.log("roompage");
-    //     // socket.on("userIsJoined", () => {
-    //     //     console.log("Successfully joined the room.");
-    //     // })
-    //     // roughCanvas.linearPath([[690, 10], [790, 20], [750, 120], [690, 100]]);
-    //     socket.on("onDraw", (data) => {
-    //         console.log("called");
-
-    //         const roughCanvas = rough.canvas(canvasRef.current)
-    //         roughCanvas.linearPath(data.path, { roughness: 0, stroke: color, strokeWidth: 1 })
-    //       });
-    // },[socket, elements, color, pencilPath])
 
     const handleClearCanvas = () => {
         const canvas = canvasRef.current;
@@ -164,7 +142,6 @@ export const RoomPage = ({ user, socket }) => {
                     color={color}
                     socket={socket}
                     user={user}
-                    setPencilPath={setPencilPath}
                 />
             </div>
         </div>

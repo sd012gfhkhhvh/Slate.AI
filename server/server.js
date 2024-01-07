@@ -33,12 +33,26 @@ io.on("connection", (socket) => {
         socket.to(roomId).emit("onDraw",{ path: currentPath });
     })
 
-    socket.on("draw", ({path}) => {
+    //Pencil
+    socket.on("drawPencil", ({path}) => {
         currentPath = path;
-        console.log("drawing...");
+        console.log("drawing pencil...");
         // console.log(path);
-        // console.log(currentRoomId);
-        socket.to(currentRoomId).emit("onDraw", {path: path});
+        socket.to(currentRoomId).emit("onDrawPencil", {path: path});
+    })
+
+    //Line
+    socket.on("drawLine", ({path}) => {
+        currentPath = path;
+        console.log("drawing line...");
+        socket.to(currentRoomId).emit("onDrawLine", {x1: path[0], y1: path[1], x2:path[2], y2: path[3]});
+    })
+
+    //Rectrangle
+    socket.on("drawRect", ({path}) => {
+        currentPath = path;
+        console.log("drawing rect...");
+        socket.to(currentRoomId).emit("onDrawRect", {x1: path[0], y1: path[1], x2:path[2], y2: path[3]});
     })
 
 
@@ -49,15 +63,6 @@ io.on("connection", (socket) => {
         connections = connections.filter((con) => con.id !== socket.id)
     })
 })
-
-// io.of("/currentRoomId").on("connection", (socket) => {
-//     socket.on("draw", (path) => {
-//         currentPath = path;
-//         console.log("drawing...");
-
-//         io.of("/currentRoomId").to(currentRoomId).emit("onDraw", {path: path});
-//     })
-// })
 
 server.listen(port, () => {
     console.log(`server listening on ${port}`);

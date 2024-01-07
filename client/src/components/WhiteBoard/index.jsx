@@ -5,24 +5,29 @@ import rough from 'roughjs';
 import "./index.css"
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, color, socket, user, setPencilPath }) => {
+export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, color, socket, user }) => {
 
   useEffect(() => {
     const roughCanvas = rough.canvas(canvasRef.current)
     console.log("whiteboard");
 
-    socket.on("userIsJoined", () => {
-      console.log("Successfully joined the room.");
-    })
-
-    socket.on("onDraw", ({ path }) => {
-      console.log("called");
+    socket.on("onDrawPencil", ({ path }) => {
+      console.log("onDrawPencil called");
       roughCanvas.linearPath(path, { roughness: 0, stroke: color, strokeWidth: 1 })
     });
-  })
+
+    socket.on("onDrawLine", ({ x1, y1, x2, y2 }) => {
+      console.log("onDrawLine called");
+      roughCanvas.line(x1, y1, x2, y2, { roughness: 0, stroke: color, strokeWidth: 1 })
+    })
+
+    socket.on("onDrawRect", ({ x1, y1, x2, y2 }) => {
+      console.log("onDrawRect called");
+      roughCanvas.rectangle(x1, y1, x2, y2, { roughness: 0, stroke: color, strokeWidth: 1 })
+    })
+  }, [elements, socket])
 
   const [isDrawing, setIsdrawing] = useState(false)
-  const strokeWidth = 4;
   //getting the canvas referance and context on the first render
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,6 +41,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
 
     ctxRef.current = ctx
   }, []);
+
 
   // TODO: not working
   // useEffect(() => {
@@ -94,8 +100,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           stroke: color,
         },
       ])
-      setPencilPath([offsetX, offsetY]);
-      // socket.emit("draw", [offsetX, offsetY])
+      
     }
 
     //<------------------------- Line -------------------------------->
@@ -145,7 +150,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
         //getting the path of the recent element
         const path = elements[elements.length - 1].path;
         const newPath = [...path, [offsetX, offsetY]];
-       
+
         //update the recent path
         setElements((prevElm) => {
           return prevElm.map((element, index) => {
@@ -159,67 +164,11 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
             }
           })
         })
-        setPencilPath([...newPath])
-        socket.emit("draw", {path: newPath});
+        
+        socket.emit("drawPencil", { path: newPath });
         //draw the path
         roughCanvas.linearPath(newPath, { roughness: 0, stroke: color, strokeWidth: 1 })
       }
-
-      // //---Line---
-      // if (tool === "line") {
-      //   const lastOffsetX = elements[elements.length - 1].offsetX;
-      //   const lastOffsetY = elements[elements.length - 1].offsetY;
-      //   const { offsetX, offsetY } = e.nativeEvent;
-      //   console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
-
-      //   //ref - line (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
-      //   setElements((prevElm) => {
-      //     return prevElm.map((element, index) => {
-      //       if (index === (elements.length - 1)) {
-      //         return {
-      //           ...element,
-      //           strokeWidth: offsetX,
-      //           strokeHeight: offsetY
-      //         }
-      //       } else {
-      //         return element
-      //       }
-      //     })
-      //   })
-
-      //   roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness:0, stroke: color, strokeWidth: 1 })
-      // }
-
-      // //---Rectrangle---
-      // if (tool === "rect") {
-      //   const lastOffsetX = elements[elements.length - 1].offsetX;
-      //   const lastOffsetY = elements[elements.length - 1].offsetY;
-      //   const { offsetX, offsetY } = e.nativeEvent;
-      //   console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
-
-      //   //ref - rectrangle (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
-      //   setElements((prevElm) => {
-      //     return prevElm.map((element, index) => {
-      //       if (index === (elements.length - 1)) {
-      //         return {
-      //           ...element,
-      //           // {Bug: instade of height an width it gests the last mouse position}
-      //           // strokeWidth: offsetX,
-      //           // strokeHeight: offsetY,
-
-      //           //{fixed: getting the difference of the initial and the current positions for height and width}
-      //           strokeWidth: offsetX - element.offsetX,
-      //           strokeHeight: offsetY - element.offsetY,
-      //         }
-      //       } else {
-      //         return element
-      //       }
-      //     })
-      //   })
-      //   roughCanvas.rectangle(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness:0, stroke: color, strokeWidth: 1 })
-      // }
-
-
     }
   }
 
@@ -235,6 +184,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
       const lastOffsetX = elements[elements.length - 1].offsetX;
       const lastOffsetY = elements[elements.length - 1].offsetY;
       const { offsetX, offsetY } = e.nativeEvent;
+      const newPath = [lastOffsetX, lastOffsetY, offsetX, offsetY]
       console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
 
       //ref - line (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
@@ -251,6 +201,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           }
         })
       })
+      socket.emit("drawLine", {path: newPath})
       roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness: 0, stroke: color, strokeWidth: 1 })
     }
 
@@ -259,6 +210,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
       const lastOffsetX = elements[elements.length - 1].offsetX;
       const lastOffsetY = elements[elements.length - 1].offsetY;
       const { offsetX, offsetY } = e.nativeEvent;
+      const newPath = [lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY)]
       console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
 
       //ref - rectrangle (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
@@ -280,7 +232,8 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           }
         })
       })
-      roughCanvas.rectangle(lastOffsetX, lastOffsetY, offsetX - lastOffsetX, offsetY - lastOffsetY, { roughness: 0, stroke: color, strokeWidth: 1 })
+      socket.emit("drawRect", {path: newPath})
+      roughCanvas.rectangle(lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY), { roughness: 0, stroke: color, strokeWidth: 1 })
     }
 
     setIsdrawing(false)
@@ -299,7 +252,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
         onMouseUp={handleMouseUp}
         className="border border-dark border-3 rounded-3 h-100 w-100 overflow-hidden"
       >
-        <canvas ref={canvasRef}/>
+        <canvas ref={canvasRef} />
       </div>
     </div>
   )
