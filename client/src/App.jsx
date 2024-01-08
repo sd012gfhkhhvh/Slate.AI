@@ -20,16 +20,16 @@ const socket = io(server, connectionOptions);
 const App = () => {
   const [user, setUser] = useState(null);
 
-  useEffect(() =>{
-    console.log("hey");
-    socket.on("userIsJoined", (data) => {
-      if(data.success){
-        console.log("UserJoined");
-      }else{
-        console.log("error joining user");
-      }
-    })
-  }, [])
+  // useEffect(() =>{
+  //   console.log("hey");
+  //   socket.on("userIsJoined", (data) => {
+  //     if(data.success){
+  //       console.log("UserJoined");
+  //     }else{
+  //       console.log("error joining user");
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className="container">

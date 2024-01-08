@@ -14,6 +14,15 @@ export const RoomPage = ({ user, socket }) => {
     const [color, setColor] = useState("black") // select color
     const [elements, setElements] = useState([]) // array of different "drawing events"(elements)
     const [removedElements, setRemovedElements] = useState([]) // array of undo elements
+    const [usersInRoom, setUsersInRoom] = useState([]); // array of users in a room
+
+    // update users state
+    useEffect(() =>{
+        socket.on("userIsJoined", ({users}) => {
+            console.log(users);
+            setUsersInRoom(users);
+        })
+      }, [socket])
 
     const handleClearCanvas = () => {
         const canvas = canvasRef.current;
@@ -48,7 +57,15 @@ export const RoomPage = ({ user, socket }) => {
         // main div of canvas page
         <div className="row">
             {/* Header */}
-            <h1 className="text-center py-4">White Board Sharig App<span className="text-primary">[Users Online : 0]</span></h1>
+            <h1 className="text-center py-4">White Board Sharig App<span className="text-primary">[Users Online : {usersInRoom.length}]</span></h1>
+            
+            {/* Users Panel */}
+            <div className="border border-black">
+            <h4>Users Online</h4>
+                {usersInRoom.map(user => <>
+                    <p>{user.name}</p>
+                </>)}
+            </div>
 
             {/* toolbar implementation */}
             <div className="border col-md-10 mx-auto mb-3 d-flex align-items-center justify-content-between">

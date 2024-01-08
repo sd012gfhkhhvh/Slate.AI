@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const {addUser, removeUser, getUser, getUsersInRoom} = require('./utils/users')
 
 const server = require('http').createServer(app);
 const { Server } = require("socket.io");
@@ -14,7 +15,10 @@ app.get('/', (req, res) => {
 
 let connections = [];
 let currentRoomId = '';
-let currentPath = [];
+
+const isRoomPresent = (roomId) => {
+    return rooms.find(room => roomId === room)
+}
 
 io.on("connection", (socket) => {
     connections.push(socket); //store the connections in an array
@@ -23,38 +27,36 @@ io.on("connection", (socket) => {
 
     socket.on("userJoinedRoom", (data) => {
         const { name, roomId, userId, host, presenter } = data;
-        socket.join(roomId)
         currentRoomId = roomId;
+        const users = addUser({ name, roomId, userId, host, presenter }) // an array of users in the room
+
+        socket.join(roomId) // user joined the room
+
         console.log(`${userId} joined room ${roomId}`);
 
-        socket.emit("userIsJoined", { success: true });
-        socket.to(roomId).emit("userJoinedRoom", { success: true });
+        io.sockets.in(roomId).emit("userIsJoined", { users: users });
 
-        socket.to(roomId).emit("onDraw",{ path: currentPath });
+        socket.to(roomId).emit("userJoinedRoom", { success: true, users: users  });
     })
 
     //Pencil
-    socket.on("drawPencil", ({path}) => {
-        currentPath = path;
+    socket.on("drawPencil", ({ path }) => {
         console.log("drawing pencil...");
         // console.log(path);
-        socket.to(currentRoomId).emit("onDrawPencil", {path: path});
+        socket.to(currentRoomId).emit("onDrawPencil", { path: path });
     })
 
     //Line
-    socket.on("drawLine", ({path}) => {
-        currentPath = path;
+    socket.on("drawLine", ({ path }) => {
         console.log("drawing line...");
-        socket.to(currentRoomId).emit("onDrawLine", {x1: path[0], y1: path[1], x2:path[2], y2: path[3]});
+        socket.to(currentRoomId).emit("onDrawLine", { x1: path[0], y1: path[1], x2: path[2], y2: path[3] });
     })
 
     //Rectrangle
-    socket.on("drawRect", ({path}) => {
-        currentPath = path;
+    socket.on("drawRect", ({ path }) => {
         console.log("drawing rect...");
-        socket.to(currentRoomId).emit("onDrawRect", {x1: path[0], y1: path[1], x2:path[2], y2: path[3]});
+        socket.to(currentRoomId).emit("onDrawRect", { x1: path[0], y1: path[1], x2: path[2], y2: path[3] });
     })
-
 
     //when user leves
     socket.on("disconnect", (socket) => {
