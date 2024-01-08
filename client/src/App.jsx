@@ -32,7 +32,7 @@ const App = () => {
   // }, [])
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <Routes>
         <Route path="/" element={<Form socket={socket} setUser={setUser}/>}/>
         <Route path="/:roomId" element={<RoomPage user={user} socket={socket}/>}/>

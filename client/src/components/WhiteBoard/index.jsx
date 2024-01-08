@@ -32,7 +32,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.height = window.innerHeight * 0.7;
-    canvas.width = window.innerWidth * 0.7;
+    canvas.width = window.innerWidth;
     const ctx = canvas.getContext('2d');
 
     ctx.strokeStyle = color;
