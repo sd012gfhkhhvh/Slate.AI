@@ -1,0 +1,10 @@
+.main-panel {
+    position: fixed;
+    top: 8.2rem;
+    right: 1rem;
+    bottom: 0;
+    height: 71%;
+    width: 20rem;
+    z-index: 0;
+    background-color: rgb(191, 211, 211);
+}

@@ -34,14 +34,14 @@ const CreateRoom = ({socket, setUser}) => {
             presenter: true,
         }
 
-        console.log(userData);
         setUser(userData);
+        console.log(userData);
+        
+        //emit user details
+        socket.emit("userJoinedRoom", userData)
 
         // navigate to the whiteboard page
         navigate(`/${roomId}`);
-
-        //emit user details
-        socket.emit("userJoinedRoom", userData)
     }
 
     return (

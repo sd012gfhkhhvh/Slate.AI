@@ -23,8 +23,8 @@ const JoinRoom = ({ socket, setUser }) => {
         }
 
         console.log(userData);
+        
         setUser(userData);
-
         // navigate to the whiteboard page
         navigate(`/${roomId}`);
 

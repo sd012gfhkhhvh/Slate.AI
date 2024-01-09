@@ -18,8 +18,12 @@ const connectionOptions = {
 const socket = io(server, connectionOptions);
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
+  useEffect(() => { 
+    // console.log("from App: ");
+    // console.log(user);
+   })
   // useEffect(() =>{
   //   console.log("hey");
   //   socket.on("userIsJoined", (data) => {

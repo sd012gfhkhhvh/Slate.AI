@@ -28,7 +28,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
   }, [elements, socket])
 
   const [isDrawing, setIsdrawing] = useState(false)
-  //getting the canvas referance and context on the first render
+  //getting the canvas referance and context on component Mount
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.height = window.innerHeight * 0.7;

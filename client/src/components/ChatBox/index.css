@@ -1,0 +1,26 @@
+.main-panel {
+    position: fixed;
+    top: 8.2rem;
+    right: 1rem;
+    bottom: 0;
+    height: 71%;
+    width: 20rem;
+    z-index: 0;
+    background-color: rgb(191, 211, 211);
+}
+
+.chat-container {
+    height: 100%;
+    /* opacity: 0.5; */
+}
+
+.chat-field {
+    overflow-y: auto;
+    height: 20rem;
+    max-height: 20rem;
+}
+
+.scrollabletextbox {
+    height:2rem;
+    font-size: 82%;
+}

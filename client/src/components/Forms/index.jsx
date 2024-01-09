@@ -6,7 +6,7 @@ import JoinRoom from "./JoinRoomForm"
 import "./index.css"
 const Form = ({socket, setUser}) => {
     useEffect(() => {
-        console.log("form pahe");
+        console.log("form page");
     })
     return(
         <div className="row h-100 pt-5">

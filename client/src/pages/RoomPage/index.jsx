@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react"
-import rough from 'roughjs';
 
 import "./index.css"
 import { WhiteBoard } from "../../components/WhiteBoard";
+import { Userbar } from "../../components/Userbar";
+import { ChatBox } from "../../components/ChatBox";
 
 export const RoomPage = ({ user, socket }) => {
+
     const canvasRef = useRef(null)
     const ctxRef = useRef(null)
 
@@ -24,6 +26,11 @@ export const RoomPage = ({ user, socket }) => {
             console.log(users);
             setUsersInRoom(users);
         })
+
+        // socket.on("onDisconnect" , (name) => {
+        //     alert(`${name} has disconnected .`)
+        // })
+
     }, [socket, elements])
 
     const handleClearCanvas = () => {
@@ -38,7 +45,7 @@ export const RoomPage = ({ user, socket }) => {
     const handleUndo = (e) => {
         e.preventDefault();
         setRemovedElements((prevElm) => {
-            console.log("removed: "+ prevElm.length);
+            console.log("removed: " + prevElm.length);
             return [...prevElm, elements[elements.length - 1]]
         })
         setElements((prevElm) => {
@@ -67,29 +74,22 @@ export const RoomPage = ({ user, socket }) => {
 
             {/* Users Panel */}
             {isUserpanel &&
-                <div className="main-panel d-flex flex-column justify-content-start border border-black rounded-4">
-                    <div className="d-flex justify-content-end my-2 me-2">
-                        <button className="btn btn-primary" onClick={() => { setIsUserPanel(false); setIsChatBox(false) }}>X</button>
-                    </div>
-                    <div className="users-box container-fluid h-100">
-                        <h4 className="text-center text-danger border border-dark py-1">Peoples Online : {usersInRoom.length}</h4>
-                        {usersInRoom.map(usr => <>
-                            {(usr.userId === user.userId) ? <p>{usr.name + "(You)"}</p> : <p>{usr.name}</p>}
-                        </>)}
-                    </div>
-                </div>
+                <Userbar
+                    usersInRoom={usersInRoom}
+                    user={user}
+                    setIsChatBox={setIsChatBox}
+                    setIsUserPanel={setIsUserPanel}
+                />
             }
             {/* Chat Box */}
             {isChatBox &&
-                <div className="main-panel d-flex flex-column justify-content-start border border-black rounded-4">
-                    <div className="d-flex justify-content-end my-2 me-2">
-                        <button className="btn btn-primary" onClick={() => { setIsUserPanel(false); setIsChatBox(false) }}>X</button>
-                    </div>
-                    <div className="users-box container-fluid h-100">
-                        <h4 className="text-center text-danger border border-dark py-1">Chat</h4>
-
-                    </div>
-                </div>
+                <ChatBox
+                    socket={socket}
+                    UserInRoom={usersInRoom}
+                    user={user}
+                    setIsChatBox={setIsChatBox}
+                    setIsUserPanel={setIsUserPanel}
+                />
             }
 
             {/* toolbar implementation */}
@@ -191,13 +191,13 @@ export const RoomPage = ({ user, socket }) => {
             <div className="bg-dark mt-2 d-flex justify-content-end align-items-center">
                 <button
                     className="btn btn-outline-info my-2 me-3"
-                    onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false); console.log(`${isUserpanel} + ${isChatBox}`)}}
+                    onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false); }}
                 >
                     Peoples
                 </button>
                 <button
                     className="btn btn-outline-info my-2 me-3"
-                    onClick={(e) => { e.preventDefault(); setIsChatBox(true); setIsUserPanel(false); console.log(`${isUserpanel} + ${isChatBox}`) }}
+                    onClick={(e) => { e.preventDefault(); setIsChatBox(true); setIsUserPanel(false); }}
                 >
                     Chat
                 </button>
