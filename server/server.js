@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
         console.log(`${socketId} is disconnected`);
         const user = getUser(socketId);
         if (user) {
-            socket.to(currentRoomId).emit("onDisconnect", user.name) // io.sockets.to().emit() is a bug here
+            socket.to(currentRoomId).emit("onDisconnect", {name: user.name, socketId: user.socketId}) // io.sockets.to().emit() is a bug here
             removeUser(socketId);
         }
 

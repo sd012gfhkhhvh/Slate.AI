@@ -27,9 +27,13 @@ export const RoomPage = ({ user, socket }) => {
             setUsersInRoom(users);
         })
 
-        // socket.on("onDisconnect" , (name) => {
-        //     alert(`${name} has disconnected .`)
-        // })
+        socket.on("onDisconnect" , ({name, socketId}) => { // Bug: if the arguments are not deStructured(i.e. (name, socketId) not {name, socketId})
+                                                          // exit of a user doesnot reflet in the userPanel, the exited users name still be there in the list 
+            // alert(`${name} has disconnected .`)
+            setUsersInRoom((prevUser) => {
+                return prevUser.filter(user => user.socketId !== socketId)
+            });
+        })
 
     }, [socket, elements])
 
