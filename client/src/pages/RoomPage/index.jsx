@@ -6,6 +6,7 @@ import "./index.css"
 import { WhiteBoard } from "../../components/WhiteBoard";
 import { Userbar } from "../../components/Userbar";
 import { ChatBox } from "../../components/ChatBox";
+import { toast } from 'react-toastify';
 
 export const RoomPage = ({ user, socket }) => {
 
@@ -25,11 +26,29 @@ export const RoomPage = ({ user, socket }) => {
         socket.on("userIsJoined", ({ users }) => {
             console.log(users);
             setUsersInRoom(users);
+            //Bug: if we use toast here the joined user will also be notified when they join, but we dont want that. we only want to notify others
+            // toast.info(`${users.name} has joined the room.`, {
+            //     position: toast.POSITION.TOP_CENTER
+            // });
         })
 
-        socket.on("onDisconnect" , ({name, socketId}) => { // Bug: if the arguments are not deStructured(i.e. (name, socketId) not {name, socketId})
-                                                          // exit of a user doesnot reflet in the userPanel, the exited users name still be there in the list 
-            // alert(`${name} has disconnected .`)
+        // notify user join event
+        socket.on("userJoinedRoom", ({success, user }) => {
+            console.log("toast check: ");
+            console.log(user);
+            if(success){
+                toast.info(`${user.name} has joined the room.`, {
+                    position: toast.POSITION.TOP_CENTER
+                });
+            }
+        })
+
+        // notify user leave event
+        socket.on("onDisconnect", ({ name, socketId }) => { // Bug: if the arguments are not deStructured(i.e. (name, socketId) not {name, socketId})
+            // exit of a user doesnot reflet in the userPanel, the exited users name still be there in the list 
+            toast.info(`${name} has left the room.`, {
+                position: toast.POSITION.TOP_CENTER
+            })
             setUsersInRoom((prevUser) => {
                 return prevUser.filter(user => user.socketId !== socketId)
             });

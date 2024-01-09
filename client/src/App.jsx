@@ -2,6 +2,8 @@
 import { Route, Routes } from "react-router-dom";
 import { RoomPage } from "./pages/RoomPage";
 import io from 'socket.io-client'
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 import Form from "./components/Forms";
 import { useState, useEffect } from "react";
@@ -20,10 +22,10 @@ const socket = io(server, connectionOptions);
 const App = () => {
   const [user, setUser] = useState({});
 
-  useEffect(() => { 
+  useEffect(() => {
     // console.log("from App: ");
     // console.log(user);
-   })
+  })
   // useEffect(() =>{
   //   console.log("hey");
   //   socket.on("userIsJoined", (data) => {
@@ -36,12 +38,15 @@ const App = () => {
   // }, [])
 
   return (
-    <div className="container-fluid">
-      <Routes>
-        <Route path="/" element={<Form socket={socket} setUser={setUser}/>}/>
-        <Route path="/:roomId" element={<RoomPage user={user} socket={socket}/>}/>
-      </Routes>
-    </div>
+    <>
+      <ToastContainer/>
+      <div className="container-fluid">
+        <Routes>
+          <Route path="/" element={<Form socket={socket} setUser={setUser} />} />
+          <Route path="/:roomId" element={<RoomPage user={user} socket={socket} />} />
+        </Routes>
+      </div>
+    </>
   )
 }
 export default App;
