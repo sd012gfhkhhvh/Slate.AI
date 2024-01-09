@@ -24,29 +24,33 @@ export const RoomPage = ({ user, socket }) => {
             console.log(users);
             setUsersInRoom(users);
         })
-    }, [socket])
+    }, [socket, elements])
 
     const handleClearCanvas = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         setElements([]);
+        console.log("Cleared. elements array length: " + elements.length);
     }
 
     //handle undo
-    const handleUndo = () => {
+    const handleUndo = (e) => {
+        e.preventDefault();
         setRemovedElements((prevElm) => {
+            console.log("removed: "+ prevElm.length);
             return [...prevElm, elements[elements.length - 1]]
         })
         setElements((prevElm) => {
-            console.log(prevElm.length);
+            console.log("prev-elements: " + prevElm.length);
             return prevElm.slice(0, prevElm.length - 1)
         })
-        console.log(elements.length);
+        console.log("elements: " + elements.length);
     }
 
     //handle redo
-    const handleRedo = () => {
+    const handleRedo = (e) => {
+        e.preventDefault();
         setElements((prevElm) => {
             return [...prevElm, removedElements[removedElements.length - 1]]
         })
@@ -75,7 +79,7 @@ export const RoomPage = ({ user, socket }) => {
                     </div>
                 </div>
             }
-
+            {/* Chat Box */}
             {isChatBox &&
                 <div className="main-panel d-flex flex-column justify-content-start border border-black rounded-4">
                     <div className="d-flex justify-content-end my-2 me-2">
@@ -149,14 +153,14 @@ export const RoomPage = ({ user, socket }) => {
                 <div className="col-md-3 d-flex gap-2">
                     <button
                         className="btn btn-primary mt-1 "
-                        onClick={() => handleUndo()}
+                        onClick={handleUndo}
                         disabled={elements.length <= 0}
                     >
                         Undo
                     </button>
                     <button
                         className="btn btn-outline-primary mt-1 "
-                        onClick={() => handleRedo()}
+                        onClick={handleRedo}
                         disabled={removedElements.length <= 0}
                     >
                         Redo

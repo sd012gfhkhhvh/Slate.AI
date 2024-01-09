@@ -40,22 +40,22 @@ io.on("connection", (socket) => {
     })
 
     //Pencil
-    socket.on("drawPencil", ({ path }) => {
+    socket.on("drawPencil", ({ path, strokeColor }) => {
         console.log("drawing pencil...");
         // console.log(path);
-        socket.to(currentRoomId).emit("onDrawPencil", { path: path });
+        socket.to(currentRoomId).emit("onDrawPencil", { path: path, strokeColor: strokeColor });
     })
 
     //Line
-    socket.on("drawLine", ({ path }) => {
+    socket.on("drawLine", ({ path, strokeColor }) => {
         console.log("drawing line...");
-        socket.to(currentRoomId).emit("onDrawLine", { x1: path[0], y1: path[1], x2: path[2], y2: path[3] });
+        socket.to(currentRoomId).emit("onDrawLine", { x1: path[0], y1: path[1], x2: path[2], y2: path[3], strokeColor: strokeColor });
     })
 
     //Rectrangle
-    socket.on("drawRect", ({ path }) => {
+    socket.on("drawRect", ({ path, strokeColor }) => {
         console.log("drawing rect...");
-        socket.to(currentRoomId).emit("onDrawRect", { x1: path[0], y1: path[1], x2: path[2], y2: path[3] });
+        socket.to(currentRoomId).emit("onDrawRect", { x1: path[0], y1: path[1], x2: path[2], y2: path[3], strokeColor: strokeColor });
     })
 
     //when user leves
