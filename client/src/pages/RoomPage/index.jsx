@@ -23,6 +23,7 @@ export const RoomPage = ({ user, socket }) => {
 
     // update users state
     useEffect(() => {
+        // add users in a array(usersInRoom)
         socket.on("userIsJoined", ({ users }) => {
             console.log(users);
             setUsersInRoom(users);
@@ -56,6 +57,7 @@ export const RoomPage = ({ user, socket }) => {
 
     }, [socket, elements])
 
+    // handle clear canvas
     const handleClearCanvas = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
@@ -93,7 +95,7 @@ export const RoomPage = ({ user, socket }) => {
         // main div of canvas page
         <div className="mainCanvas">
             {/* Header */}
-            <h1 className="text-center py-2">White Board Sharig App<span className="text-primary">[Users Online : {usersInRoom.length}]</span></h1>
+            <h1 className="text-center py-2">Slate.AI</h1>
 
             {/* Users Panel */}
             {isUserpanel &&
