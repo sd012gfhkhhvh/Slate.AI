@@ -11,6 +11,7 @@
   "author": "Soham das",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "socket.io": "^4.7.3"

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const cors = require('cors');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
 const server = require('http').createServer(app);
@@ -9,6 +9,8 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const port = process.env.PORT || 3000;
+
+app.use(cors()); //allowing all sources
 
 app.get('/', (req, res) => {
     res.send("Hello, world!");
@@ -76,6 +78,13 @@ io.on("connection", (socket) => {
 
         // remove connection from array
         connections = connections.filter((con) => con.id !== socket.id)
+    })
+})
+
+app.use((err, req, res, next) => {
+    console.log(err.message);
+    res.status(500).json({
+        msg:"Server error: " + err.message
     })
 })
 
