@@ -1,4 +1,13 @@
 .canvas-box {
-    height: 500;
+    height: 100%;
     display: block;
+}
+.mainCanvas{
+    height: 100vh;
+    width: 100vw;
+    padding: 2rem 1rem;
+}
+
+.tool-logo {
+    height:1.5rem
 }

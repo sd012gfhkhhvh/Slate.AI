@@ -32,36 +32,39 @@ export const ChatBox = (prop) => {
 
     return (
         <div className="main-panel d-flex flex-column justify-content-start border border-black rounded-4">
-            <div className="d-flex justify-content-end my-2 me-2">
-                <button className="btn btn-primary" onClick={() => { setIsUserPanel(false); setIsChatBox(false) }}>X</button>
+            {/* closeButton */}
+            <div className="d-flex justify-content-end m-2">
+                <button className="btn btn-primary btn-sm" onClick={() => { setIsUserPanel(false); setIsChatBox(false) }}>X</button>
             </div>
-            <div className="chat-container py-1 container">
-                <h4 className="text-center text-dark border border-dark py-1">Chat-Box</h4>
-                <div className="chat-field container-fluid">
-                    {messages.map((msg) => {
-                        return <div key={user.userId} className="chats">
-                            <p>{`${msg.name}: ${msg.message}`}</p>
-                        </div>
-                    })}
+
+            <div className="d-flex flex-column justify-content-between h-100">
+                {/* chatbox */}
+                <div className="chat-container container">
+                    <h5 className="text-center text-dark py-1">Room Chat</h5>
+                    <div className="chat-field container-fluid rounded-2">
+                        {messages.map((msg) =>
+                            <p key={user.socketId} className="chats border py-1 px-3 my-2 rounded-3">{`${msg.name}: ${msg.message}`}</p>
+                        )}
+                    </div>
                 </div>
-                <div className="from-group container bg-dark d-flex justify-content-between mt-1">
-                    <div className="input-group d-flex align-items-center justify-content-center">
-                        <textarea
-                            type="text"
-                            placeholder="Send message"
-                            value={input}
-                            onChange={handleInput}
-                            className="scrollabletextbox form-control my-2 border-0 me-2 rounded-1 overflow-auto"
-                        ></textarea>
-                        <div className="input-group-append">
-                            <button
-                                type="button"
-                                className="btn btn-outline-primary btn-sm"
-                                onClick={handleSubmit}
-                            >
-                                Send
-                            </button>
-                        </div>
+
+                {/* textarea */}
+                <div className="px-2 d-flex align-items-center justify-content-center">
+                    <textarea
+                        type="text"
+                        placeholder="Enter message"
+                        value={input}
+                        onChange={handleInput}
+                        className="scrollabletextbox form-control my-2 border-0 me-1 rounded-5 overflow-auto"
+                    ></textarea>
+                    <div className="input-group-append">
+                        <button
+                            type="button"
+                            className="btn btn-outline-primary btn-sm rounded-5"
+                            onClick={handleSubmit}
+                        >
+                            Send
+                        </button>
                     </div>
                 </div>
             </div>

@@ -31,7 +31,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
   //getting the canvas referance and context on component Mount
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.height = window.innerHeight * 0.7;
+    canvas.height = window.innerHeight * 0.89;
     canvas.width = window.innerWidth;
     const ctx = canvas.getContext('2d');
 
@@ -255,7 +255,8 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        className="border border-dark border-3 rounded-3 h-100 w-100 overflow-hidden"
+        style={{borderStyle: "dashed", borderColor: "gray"}}
+        className="rounded-5 overflow-hidden"
       >
         <canvas ref={canvasRef} />
       </div>

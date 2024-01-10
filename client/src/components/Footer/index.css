@@ -3,11 +3,12 @@
     height: 15%;
 }
 
-.logo {
-    height: 2rem;
-    width: 2rem;
+.logo-social {
+    height: 1.3rem;
+    width: 1.3rem;
 }
 
 .socials {
     width: 15%;
+    font-weight: 600;
 }

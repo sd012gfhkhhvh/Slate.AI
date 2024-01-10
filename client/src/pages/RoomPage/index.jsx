@@ -1,14 +1,21 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react"
-
+import { useNavigate } from "react-router-dom";
 import "./index.css"
 import { WhiteBoard } from "../../components/WhiteBoard";
 import { Userbar } from "../../components/Userbar";
 import { ChatBox } from "../../components/ChatBox";
 import { toast } from 'react-toastify';
 
+//icons
+import pencilIcon from '../../assets/pencil.png'
+import lineIcon from '../../assets/diagonal-line.png'
+import rectIcon from '../../assets/rounded-rectangle.png'
+
 export const RoomPage = ({ user, socket }) => {
+
+    const navigate = useNavigate();
 
     const canvasRef = useRef(null)
     const ctxRef = useRef(null)
@@ -34,10 +41,10 @@ export const RoomPage = ({ user, socket }) => {
         })
 
         // notify user join event
-        socket.on("userJoinedRoom", ({success, user }) => {
+        socket.on("userJoinedRoom", ({ success, user }) => {
             console.log("toast check: ");
             console.log(user);
-            if(success){
+            if (success) {
                 toast.info(`${user.name} has joined the room.`, {
                     position: toast.POSITION.TOP_CENTER
                 });
@@ -64,6 +71,11 @@ export const RoomPage = ({ user, socket }) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         setElements([]);
         console.log("Cleared. elements array length: " + elements.length);
+    }
+
+    //handle Leave Room
+    const handleLeaveRoom = () => {
+        navigate("/");
     }
 
     //handle undo
@@ -93,9 +105,101 @@ export const RoomPage = ({ user, socket }) => {
 
     return (
         // main div of canvas page
-        <div className="mainCanvas">
-            {/* Header */}
-            <h1 className="text-center py-2">Slate.AI</h1>
+        <div className="mainCanvas d-flex flex-wrap">
+
+            {/* toolbar implementation */}
+            <div className="d-flex flex-column justify-content-between align-items-center">
+
+                {/* Undo and Redo Button */}
+                <div className="w-100 d-flex justify-content-evenly">
+                    <button
+                        className="btn btn-primary btn-sm"
+                        onClick={handleUndo}
+                        disabled={elements.length <= 0}
+                    >
+                        Undo
+                    </button>
+                    <button
+                        className="btn btn-outline-primary btn-sm"
+                        onClick={handleRedo}
+                        disabled={removedElements.length <= 0}
+                    >
+                        Redo
+                    </button>
+                </div>
+                {/* Choose drawing element start */}
+                <div className="d-flex border rounded-3 flex-column gap-2 py-3 px-2">
+                    <div className="d-flex p-2 gap-2 align-items-center">
+                        <img className="tool-logo" src={pencilIcon} alt="icon" />
+                        <input
+                            type="radio"
+                            name="tool"
+                            id="pencil"
+                            value="pencil"
+                            checked={tool === "pencil"}
+                            className="mt-1"
+                            onChange={(e) => setTool(e.target.value)}
+                        ></input>
+                    </div>
+                    <div className="d-flex p-2 gap-2 align-items-center">
+                        <img className="tool-logo" src={lineIcon} alt="icon" />
+                        <input
+                            type="radio"
+                            name="tool"
+                            id="line"
+                            value="line"
+                            checked={tool === "line"}
+                            className="mt-1"
+                            onChange={(e) => setTool(e.target.value)}
+                        ></input>
+                    </div>
+                    <div className="d-flex p-2 gap-2 align-items-center">
+                        <img className="tool-logo" src={rectIcon} alt="icon" />
+                        <input
+                            type="radio"
+                            name="tool"
+                            id="rect"
+                            value="rect"
+                            checked={tool === "rect"}
+                            className="mt-1"
+                            onChange={(e) => setTool(e.target.value)}
+                        ></input>
+                    </div>
+                </div>
+
+                {/* Color picker */}
+                <div className="">
+                    <div className="d-flex align-items-center">
+                        <label htmlFor="color">Color: </label>
+                        <input
+                            type="color"
+                            id="color"
+                            className="ms-2"
+                            value={color}
+                            onChange={(e) => setColor(e.target.value)}
+                        ></input>
+                    </div>
+                </div>
+
+                 {/* Leave Room Button */}
+                 <div className="w-100">
+                    <button onClick={handleLeaveRoom} className="btn btn-danger container">Leave Room</button>
+                </div>
+            </div>
+
+            {/* Whiteboard Implementation */}
+            <div className="canvas-box col-md-9 mx-auto">
+                <WhiteBoard
+                    canvasRef={canvasRef}
+                    ctxRef={ctxRef}
+                    elements={elements}
+                    setElements={setElements}
+                    tool={tool}
+                    color={color}
+                    socket={socket}
+                    user={user}
+                />
+            </div>
 
             {/* Users Panel */}
             {isUserpanel &&
@@ -117,115 +221,27 @@ export const RoomPage = ({ user, socket }) => {
                 />
             }
 
-            {/* toolbar implementation */}
-            <div className="border col-md-10 mx-auto mb-3 d-flex align-items-center justify-content-between">
-
-                {/* Choose drawing element start */}
-                <div className="d-flex col-md-2 justify-content-between gap-1">
-                    <div className="d-flex gap-1 align-items-center">
-                        <label htmlFor="pencil">Pencil</label>
-                        <input
-                            type="radio"
-                            name="tool"
-                            id="pencil"
-                            value="pencil"
-                            checked={tool === "pencil"}
-                            className="mt-1"
-                            onChange={(e) => setTool(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="d-flex gap-1 align-items-center">
-                        <label htmlFor="line">Line</label>
-                        <input
-                            type="radio"
-                            name="tool"
-                            id="line"
-                            value="line"
-                            checked={tool === "line"}
-                            className="mt-1"
-                            onChange={(e) => setTool(e.target.value)}
-                        ></input>
-                    </div>
-                    <div className="d-flex gap-1 align-items-center">
-                        <label htmlFor="rect">Rectrangle</label>
-                        <input
-                            type="radio"
-                            name="tool"
-                            id="rect"
-                            value="rect"
-                            checked={tool === "rect"}
-                            className="mt-1"
-                            onChange={(e) => setTool(e.target.value)}
-                        ></input>
-                    </div>
-                </div>
-
-                {/* Color picker */}
-                <div className="col-md-3">
-                    <div className="d-flex align-items-center">
-                        <label htmlFor="color">Select Color: </label>
-                        <input
-                            type="color"
-                            id="color"
-                            className="mt-1 ms-3"
-                            value={color}
-                            onChange={(e) => setColor(e.target.value)}
-                        ></input>
-                    </div>
-                </div>
-
-                {/* Undo and Redo Button */}
-                <div className="col-md-3 d-flex gap-2">
-                    <button
-                        className="btn btn-primary mt-1 "
-                        onClick={handleUndo}
-                        disabled={elements.length <= 0}
-                    >
-                        Undo
-                    </button>
-                    <button
-                        className="btn btn-outline-primary mt-1 "
-                        onClick={handleRedo}
-                        disabled={removedElements.length <= 0}
-                    >
-                        Redo
-                    </button>
-                </div>
-
-                {/* Clear Canvas Button */}
-                <div className="col-md-2">
-                    <button onClick={handleClearCanvas} className="btn btn-danger">Clear canvas</button>
-                </div>
-            </div>
-
-            {/* Whiteboard Implementation */}
-            <div className="canvas-box col-md-8 h-50 mx-auto">
-                <WhiteBoard
-                    canvasRef={canvasRef}
-                    ctxRef={ctxRef}
-                    elements={elements}
-                    setElements={setElements}
-                    tool={tool}
-                    color={color}
-                    socket={socket}
-                    user={user}
-                />
-            </div>
 
             {/* Utis Button */}
-            <div className="bg-dark mt-2 d-flex justify-content-end align-items-center">
-                <button
-                    className="btn btn-outline-info my-2 me-3"
-                    onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false); }}
-                >
-                    Peoples
-                </button>
-                <button
-                    className="btn btn-outline-info my-2 me-3"
-                    onClick={(e) => { e.preventDefault(); setIsChatBox(true); setIsUserPanel(false); }}
-                >
-                    Chat
-                </button>
+            <div className="d-flex flex-column justify-content-between">
+                {/* Clear Canvas Button */}
+                <div className="w-100">
+                    <button onClick={handleClearCanvas} className="container btn btn-outline-danger">Clear canvas</button>
+                </div>
+                <div className="d-flex px-2">
+                    <button
+                        className="btn btn-outline-info my-2 me-3"
+                        onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false); }}
+                    >
+                        Peoples
+                    </button>
+                    <button
+                        className="btn btn-outline-info my-2"
+                        onClick={(e) => { e.preventDefault(); setIsChatBox(true); setIsUserPanel(false); }}
+                    >
+                        Chat
+                    </button>
+                </div>
             </div>
         </div>
     )

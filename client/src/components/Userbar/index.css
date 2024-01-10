@@ -1,8 +1,7 @@
 .main-panel {
     position: fixed;
-    top: 8.2rem;
+    bottom: 6rem;
     right: 1rem;
-    bottom: 0;
     height: 71%;
     width: 20rem;
     z-index: 0;
