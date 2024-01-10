@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-const server = "http://localhost:3000";
+const server = "https://slate-ai-backend.onrender.com";
 
 const connectionOptions = {
   "force new connection": true,
