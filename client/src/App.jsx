@@ -26,13 +26,11 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      <div className="container-fluid">
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/form" element={<Form socket={socket} setUser={setUser} />} />
           <Route path="/:roomId" element={<RoomPage user={user} socket={socket} />} />
         </Routes>
-      </div>
     </>
   )
 }
