@@ -255,9 +255,6 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onTouchStart={handleMouseDown}
-        onTouchMove={handleMouseMove}
-        onTouchEnd={handleMouseUp}
         className="border border-dark border-3 rounded-3 h-100 w-100 overflow-hidden"
       >
         <canvas ref={canvasRef} />

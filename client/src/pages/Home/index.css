@@ -1,14 +1,30 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .main-home {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  /* background-color: red; */
 }
 
-img {
-    object-fit:fill
-  }
+.home-content {
+    height: 70%;
+}
+
+.content-box > h1{
+    font-size: 50px;
+}
+
+.img-wrapper {
+    
+}
+
+.logo {
+    height: 2rem;
+    width: 2rem;
+    
+    /* border-radius: 5rem; */
+}

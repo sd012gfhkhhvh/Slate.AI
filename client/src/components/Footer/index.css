@@ -1,0 +1,13 @@
+.footer {
+    background-color: rgb(234, 226, 226);
+    height: 15%;
+}
+
+.logo {
+    height: 2rem;
+    width: 2rem;
+}
+
+.socials {
+    width: 15%;
+}
