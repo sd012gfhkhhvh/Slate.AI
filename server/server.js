@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
 const server = require('http').createServer(app);
@@ -34,7 +35,7 @@ io.on("connection", (socket) => {
 
         io.sockets.in(roomId).emit("userIsJoined", { users: users });
 
-        socket.to(roomId).emit("userJoinedRoom", { success: true, users: users });
+        socket.to(roomId).emit("userJoinedRoom", { success: true, user: {socketId, ...data} });
     })
 
     //Pencil

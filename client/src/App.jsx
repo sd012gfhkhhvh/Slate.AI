@@ -2,22 +2,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { RoomPage } from "./pages/RoomPage";
-import io from 'socket.io-client'
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Form from "./components/Forms";
 import { useState, useEffect } from "react";
 
-const server = "http://localhost:3000";
-
-const connectionOptions = {
-  "force new connection": true,
-  reconnectionAttempts: "Infinity",
-  timeout: 10000,
-  transports: ["websocket"],
-};
-
-const socket = io(server, connectionOptions);
+import { socket } from "./socket";
 
 const App = () => {
   const [user, setUser] = useState({});
