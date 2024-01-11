@@ -43,7 +43,6 @@ io.on("connection", (socket) => {
     //Pencil
     socket.on("drawPencil", ({ path, strokeColor }) => {
         // console.log("drawing pencil...");
-        // console.log(path);
         socket.to(currentRoomId).emit("onDrawPencil", { path: path, strokeColor: strokeColor });
     })
 

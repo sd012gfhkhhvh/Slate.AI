@@ -3,9 +3,10 @@
 /* eslint-disable no-unused-vars */
 import rough from 'roughjs';
 import "./index.css"
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, color, socket, user }) => {
+  const [isDrawing, setIsdrawing] = useState(false)
 
   useEffect(() => {
     const roughCanvas = rough.canvas(canvasRef.current)
@@ -27,7 +28,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
     })
   }, [elements, socket])
 
-  const [isDrawing, setIsdrawing] = useState(false)
+  
   //getting the canvas referance and context on component Mount
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -41,43 +42,6 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
 
     ctxRef.current = ctx
   }, []);
-
-
-  // TODO: not working
-  // useEffect(() => {
-  //   ctxRef.current.strokeStyle = color;
-  // }, [color])
-
-
-  // TODO: not working
-  // useEffect(() => {
-  //   const roughCanvas = rough.canvas(canvasRef.current)
-
-  //   // if (elements.length > 0) {
-  //   //   ctxRef.current.clearRect(
-  //   //     0,
-  //   //     0,
-  //   //     canvasRef.current.width,
-  //   //     canvasRef.current.height
-  //   //   )
-  //   // }
-
-  //   // elements.forEach((element) => {
-  //     //check for pencil tool
-  //     if (tool === "pencil") {
-  //       roughCanvas.linearPath(elements.path, { stroke: color, strokeWidth: 1 })
-  //     }
-  //     //check for line tool
-  //     else if (tool === "line") {
-  //       roughCanvas.line(elements.offsetX, elements.offsetY, elements.strokeWidth, elements.strokeHeight, { stroke: color, strokeWidth: 1 })
-  //     }
-  //     // check for rectrangle tool
-  //     else if (tool === "rect") {
-  //       roughCanvas.rectangle(elements.offsetX, elements.offsetY, elements.strokeWidth, elements.strokeHeight, { stroke: color, strokeWidth: 1 })
-  //     }
-  //   // })
-
-  // }, [elements])
 
 
   //<----------Mouse events handles starts here---------- !>
@@ -224,13 +188,8 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           if (index === (elements.length - 1)) {
             return {
               ...element,
-              // {Bug: instade of height an width it gests the last mouse position}
-              // strokeWidth: offsetX,
-              // strokeHeight: offsetY,
-
-              //{fixed: getting the difference of the initial and the current positions for height and width}
-              strokeWidth: offsetX - element.offsetX,
-              strokeHeight: offsetY - element.offsetY,
+              strokeWidth: offsetX,
+              strokeHeight: offsetY,
             }
           } else {
             return element

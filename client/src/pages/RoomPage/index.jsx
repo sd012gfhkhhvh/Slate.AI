@@ -34,10 +34,6 @@ export const RoomPage = ({ user, socket }) => {
         socket.on("userIsJoined", ({ users }) => {
             console.log(users);
             setUsersInRoom(users);
-            //Bug: if we use toast here the joined user will also be notified when they join, but we dont want that. we only want to notify others
-            // toast.info(`${users.name} has joined the room.`, {
-            //     position: toast.POSITION.TOP_CENTER
-            // });
         })
 
         // notify user join event
@@ -52,8 +48,7 @@ export const RoomPage = ({ user, socket }) => {
         })
 
         // notify user leave event
-        socket.on("onDisconnect", ({ name, socketId }) => { // Bug: if the arguments are not deStructured(i.e. (name, socketId) not {name, socketId})
-            // exit of a user doesnot reflet in the userPanel, the exited users name still be there in the list 
+        socket.on("onDisconnect", ({ name, socketId }) => { 
             toast.info(`${name} has left the room.`, {
                 position: toast.POSITION.TOP_CENTER
             })
@@ -231,13 +226,13 @@ export const RoomPage = ({ user, socket }) => {
                 <div className="d-flex px-2">
                     <button
                         className="btn btn-outline-info my-2 me-3"
-                        onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false); }}
+                        onClick={(e) => { e.preventDefault(); setIsUserPanel(true)}}
                     >
                         Peoples
                     </button>
                     <button
                         className="btn btn-outline-info my-2"
-                        onClick={(e) => { e.preventDefault(); setIsChatBox(true); setIsUserPanel(false); }}
+                        onClick={(e) => { e.preventDefault(); setIsChatBox(true) }}
                     >
                         Chat
                     </button>

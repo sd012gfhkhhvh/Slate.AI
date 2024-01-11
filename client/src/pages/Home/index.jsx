@@ -7,8 +7,6 @@ import { Footer } from '../../components/Footer';
 //icons and images
 import nextIcon from '../../assets/nextArrow.png'
 import demoImg from '../../assets/slateAI-canvas.png'
-import demoImg2 from '../../assets/canvas-2.png'
-import demoImg3 from '../../assets/chats.png'
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -23,7 +21,6 @@ export const Home = () => {
       <Navbar />
       <div className="home-content container-fluid row d-flex align-items-center justify-content-center">
         <div className="form-box col-md-5 form-box p-5 mx-auto d-flex flex-column align-items-start">
-          {/* <h1 className="text-primary fw-bold my-3">Welcome to Slate.AI</h1> */}
           <div className='content-box w-75 mb-4'>
             <h1 className='text-secondary'>The Web Whiteboard for Instant Collaboration</h1>
           </div>
