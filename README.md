@@ -18,6 +18,7 @@ Slate.AI is a real-time collaborative whiteboarding web application, allowing mu
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+![Bootstrap 5](https://img.shields.io/badge/Bootstrap-5.0.0-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 ## Demo
 
