@@ -1,3 +1,37 @@
+<div align="center">
+
+![gdg](https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateAI-logo-dark.png)
+
+</div>
+
+ <!-------------------------------------------------------------------------------------------------------------------------------------->
+ <div align="center">
+ <p>
+
+[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)
+![Visitors](https://api.visitorbadge.io/api/visitors?path=sd012gfhkhhvh/Slate.AI&countColor=%23263759&style=flat)
+![GitHub forks](https://img.shields.io/github/forks/sd012gfhkhhvh/Slate.AI)
+![GitHub Repo stars](https://img.shields.io/github/stars/sd012gfhkhhvh/Slate.AI)
+![GitHub contributors](https://img.shields.io/github/contributors/sd012gfhkhhvh/Slate.AI)
+![GitHub last commit](https://img.shields.io/github/last-commit/sd012gfhkhhvh/Slate.AI)
+![GitHub repo size](https://img.shields.io/github/repo-size/sd012gfhkhhvh/Slate.AI)
+![Github](https://img.shields.io/github/license/sd012gfhkhhvh/Slate.AI)
+![GitHub issues](https://img.shields.io/github/issues/sd012gfhkhhvh/Slate.AI)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/sd012gfhkhhvh/Slate.AI)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/sd012gfhkhhvh/Slate.AI)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/sd012gfhkhhvh/Slate.AI)
+
+ </p>
+ </div>
+
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+<h3 align="center">Participating in</h3>
+<div align="center"><a href="#"><img src="https://d33wubrfki0l68.cloudfront.net/710cb0d537d2e7fa6246445c0977ecc994f05f5a/6a3b4/assets/img/jwoc_logo.svg" alt="Banner" width="30%"/></a></div>
+
+
+
 ## About The Project
 
 Slate.AI is a real-time collaborative whiteboarding web application, allowing multiple users to collaboratively create art using a shared canvas. Built with the MERN stack and Socket.IO, Slate.AI provides a seamless and engaging collaborative drawing experience.
@@ -22,6 +56,13 @@ Slate.AI is a real-time collaborative whiteboarding web application, allowing mu
 
 ## Demo
 
+### Landing Page
+<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateai-landingpage.png" />
+
+### Create/Join Room Page
+<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateai-createroompage.png" />
+
+### Whiteboard with realtime collaboration and Room Chat features
 <img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateAI-canvas.png" />
 <img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/canvas-2.png" />
 <img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/chats.png" />
@@ -90,3 +131,20 @@ Mail us at - sohamdas.nest@gmail.com
 
 ## License
 [MIT License](LICENSE)
+
+**************************************************************
+<h2>⭐Give this Project a Star</h2>
+
+[![GitHub followers](https://img.shields.io/github/followers/sd012gfhkhhvh.svg?label=Follow%20@sd012gfhkhhvh&style=social)](https://github.com/sd012gfhkhhvh/)  [![Twitter Follow](https://img.shields.io/twitter/follow/Soham__Das_?style=social)](https://twitter.com/Soham__Das_)
+
+If you liked working on this project, do ⭐ and share this repository.
+
+🎉 🎊 😃 Happy Contributing 😃 🎊 🎉
+
+© 2024 Soham Das
+
+## Contributors
+
+<a href="https://github.com/sd012gfhkhhvh/Slate.AI/contributors">
+  <img src="https://contrib.rocks/image?repo=sd012gfhkhhvh/Slate.AI" />
+</a>
