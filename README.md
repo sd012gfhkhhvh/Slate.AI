@@ -88,3 +88,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Mail us at - sohamdas.nest@gmail.com
 
+## License
+[MIT License](LICENSE)
