@@ -4,10 +4,14 @@
   box-sizing: border-box;
 }
 
+body {
+  background-image: url("../../assets/backgroundImg-2.png");
+  background-size: cover; 
+}
+
 .main-home {
   height: 100vh;
   width: 100vw;
-  /* background-color: red; */
 }
 
 .home-content {
@@ -19,12 +23,11 @@
 }
 
 .img-wrapper {
-    
+    height: 80%;
+    width: 100%;
 }
 
 .logo {
     height: 2rem;
     width: 2rem;
-    
-    /* border-radius: 5rem; */
 }

@@ -2,8 +2,14 @@
 import './index.css'
 import { useNavigate } from "react-router-dom";
 import { Navbar } from '../../components/Navbar';
-import nextIcon from '../../assets/nextArrow.png'
 import { Footer } from '../../components/Footer';
+
+//icons and images
+import nextIcon from '../../assets/nextArrow.png'
+import demoImg from '../../assets/slateAI-canvas.png'
+import demoImg2 from '../../assets/canvas-2.png'
+import demoImg3 from '../../assets/chats.png'
+
 export const Home = () => {
   const navigate = useNavigate();
 
@@ -29,8 +35,8 @@ export const Home = () => {
           </div>
         </div>
         <div className="form-box col-md-5 form-box d-flex justify-content-center align-items-center mx-auto overflow-hidden">
-          <div className='img-wrapper border rounded-4 overflow-hidden'>
-            <img src='https://picsum.photos/600/350' alt='img' />
+          <div className='img-wrapper border border-black rounded-4 overflow-hidden'>
+            <img className="container-fluid h-100 p-0" src={demoImg} alt='img' />
           </div>
         </div>
       </div>
