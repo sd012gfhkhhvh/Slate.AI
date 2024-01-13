@@ -8,6 +8,12 @@ assignees: ''
 
 - [x]  I agree to follow this project's Contributing Guidelines.
 
+**Severity:**
+- [ ] Critical
+- [ ] Major
+- [ ] Minor
+- [ ] Trivial
+
 **Describe the Bug:**
 A clear and concise description of what the bug is.
 
