@@ -1,3 +1,5 @@
+# `The Curent version does not support mobiles Devices`
+
 <div align="center">
 
 ![gdg](https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateAI-logo-dark.png)
@@ -29,7 +31,6 @@
 
 <h3 align="center">Participating in</h3>
 <div align="center"><a href="#"><img src="https://d33wubrfki0l68.cloudfront.net/710cb0d537d2e7fa6246445c0977ecc994f05f5a/6a3b4/assets/img/jwoc_logo.svg" alt="Banner" width="30%"/></a></div>
-
 
 
 ## About The Project
