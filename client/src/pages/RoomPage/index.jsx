@@ -226,13 +226,13 @@ export const RoomPage = ({ user, socket }) => {
                 <div className="d-flex px-2">
                     <button
                         className="btn btn-outline-info my-2 me-3"
-                        onClick={(e) => { e.preventDefault(); setIsUserPanel(true)}}
+                        onClick={(e) => { e.preventDefault(); setIsUserPanel(true); setIsChatBox(false);}}
                     >
                         Peoples
                     </button>
                     <button
                         className="btn btn-outline-info my-2"
-                        onClick={(e) => { e.preventDefault(); setIsChatBox(true) }}
+                        onClick={(e) => { e.preventDefault(); setIsChatBox(true);setIsUserPanel(false); }}
                     >
                         Chat
                     </button>
