@@ -14,47 +14,44 @@ const Form = ({ socket, setUser }) => {
   });
   return (
     <main className="flex justify-center h-[100vh] w-[100vw] items-center">
-      <div className="flex-1 h-full hidden md:block">
-        <div className="h-full w-full bg-white"></div>
-      </div>
-
-      <div className="flex-1 h-full">
-        {isJoinRoomForm ? (
-          <div className="h-full hidden md:block w-full bg-[#4454b4]"></div>
-        ) : (
-          <div className="h-full hidden md:block w-full bg-[#c32f57]"></div>
-        )}
-        <img
-          src={joinRoomImage}
-          alt=""
-          className="h-[100%] w-[100%] object-cover relative -z-20 md:hidden"
-        />
-        {isJoinRoomForm ? (
-          <div className="absolute top-0 left-0 w-full h-full bg-[#4454b4] text-white opacity-50 -z-10"></div>
-        ) : (
-          <div className="absolute top-0 left-0 w-full h-full bg-[#c32f57] text-white opacity-50 -z-10"></div>
-        )}
+      <div className="h-full md:flex-1 bg-white  md:justify-end items-center md:flex hidden">
+        <div className="h-[500px] w-[50%] max-w-[500px] flex-1 relative flex  z-10">
+          <img
+            src={joinRoomImage}
+            alt=""
+            className="h-[100%] w-[100%] object-cover shadow-md relative -z-10"
+          />
+          {isJoinRoomForm ? (
+            <div className="absolute select-none top-0 left-0 w-full h-full bg-[#4454b4] text-white opacity-50 -z-10"></div>
+          ) : (
+            <div className="absolute select-none  top-0 left-0 w-full h-full bg-[#c32f57] text-white opacity-50 -z-10"></div>
+          )}
+        </div>
       </div>
 
       <div
-        className="flex h-[500px] justify-center w-[90vw] max-w-[1200px] flex-col md:flex-row items-center
-        bg-white rounded-lg  shadow-md absolute top-1/2 left-[53%] transform -translate-x-1/2 -translate-y-1/2
-        "
+        className={
+          isJoinRoomForm
+            ? `flex-1 w-full h-full flex justify-center md:justify-start items-center md:bg-[#4454b4]`
+            : `flex-1 w-full h-full flex justify-center md:justify-start items-center md:bg-[#c32f57]`
+        }
       >
-        <div className="h-[100%] w-[50%] flex-1 relative md:flex hidden z-10">
+        {/* this is snippet for background image in mobile view */}
+        <div className="h-full w-full absolute top-0 left-0 -z-10">
           <img
             src={joinRoomImage}
             alt=""
             className="h-[100%] w-[100%] object-cover relative -z-10"
           />
           {isJoinRoomForm ? (
-            <div className="absolute top-0 left-0 w-full h-full bg-[#4454b4] text-white opacity-50 -z-10"></div>
+            <div className="absolute select-none  top-0 left-0 w-full h-full bg-[#4454b4] text-white opacity-70 -z-10"></div>
           ) : (
-            <div className="absolute top-0 left-0 w-full h-full bg-[#c32f57] text-white opacity-50 -z-10"></div>
+            <div className="absolute select-none  top-0 left-0 w-full h-full bg-[#c32f57] text-white opacity-70 -z-10"></div>
           )}
         </div>
 
-        <div className="flex-col justify-center w-[90vw] flex-1 h-[100%] p-6  relative z-30 items-center">
+        {/* this is the actual form card component */}
+        <div className="flex-col h-[500px] min-w-[300px] max-w-[500px] bg-white shadow-md relative z-30 justify-center md:w-[50%] w-[40%] flex-1 p-6 items-center">
           <div className="flex my-4  justify-center items-center ">
             <div className="">
               <img
