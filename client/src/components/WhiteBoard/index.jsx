@@ -181,6 +181,43 @@ export const WhiteBoard = ({
           strokeWidth: 1,
         });
       }
+      // Eraser
+      if (tool === "eraser") {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        const eraserSize = 20; // Adjust the eraser size as needed
+        const { offsetX, offsetY } = e.nativeEvent;
+
+        const newPath = [
+          offsetX - eraserSize / 2,
+          offsetY - eraserSize / 2,
+          eraserSize,
+          eraserSize,
+        ];
+
+        setElements((prevElm) => {
+          return prevElm.map((element, index) => {
+            if (index === elements.length - 1) {
+              return {
+                ...element,
+                strokeWidth: offsetX,
+                strokeHeight: offsetY,
+              };
+            } else {
+              return element;
+            }
+          });
+        });
+
+        socket.emit("erase", { path: newPath });
+
+        ctx.clearRect(
+          offsetX - eraserSize / 2,
+          offsetY - eraserSize / 2,
+          eraserSize,
+          eraserSize
+        );
+      }
     }
   };
 
@@ -259,44 +296,6 @@ export const WhiteBoard = ({
         offsetX - lastOffsetX,
         offsetY - lastOffsetY,
         { roughness: 0, stroke: color, strokeWidth: 1 }
-      );
-    }
-
-    // Eraser
-    if (tool === "eraser") {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      const eraserSize = 20; // Adjust the eraser size as needed
-      const { offsetX, offsetY } = e.nativeEvent;
-
-      const newPath = [
-        offsetX - eraserSize / 2,
-        offsetY - eraserSize / 2,
-        eraserSize,
-        eraserSize,
-      ];
-
-      setElements((prevElm) => {
-        return prevElm.map((element, index) => {
-          if (index === elements.length - 1) {
-            return {
-              ...element,
-              strokeWidth: offsetX,
-              strokeHeight: offsetY,
-            };
-          } else {
-            return element;
-          }
-        });
-      });
-
-      socket.emit("erase", { path: newPath });
-
-      ctx.clearRect(
-        offsetX - eraserSize / 2,
-        offsetY - eraserSize / 2,
-        eraserSize,
-        eraserSize
       );
     }
 
