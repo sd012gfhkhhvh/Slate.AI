@@ -49,13 +49,13 @@ const CreateRoom = ({ socket, setUser }) => {
     <>
       <form className="">
         <div className="flex justify-start my-4 items-center gap-3">
-          <User size={30} color="#7851a9" />
+          <User size={30} color="#4454b4" />
           <input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md focus:text-[#7851a9] focus:outline-[#7851a9]"
+            className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md focus:text-[#4454b4] focus:outline-[#4454b4]"
           ></input>
         </div>
 
@@ -65,20 +65,20 @@ const CreateRoom = ({ socket, setUser }) => {
               type="text"
               placeholder="Generate room code"
               value={roomId}
-              className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#7851a9] focus:outline-[#7851a9]"
+              className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#4454b4] focus:outline-[#4454b4]"
               disabled
             ></input>
             <div className="flex justify-center items-center gap-2">
               <button
                 type="button"
-                className="p-2 bg-[#7851a9] text-white font-semibold rounded-md"
+                className="p-2 bg-[#4454b4] text-white font-semibold rounded-md"
                 onClick={handleGenerateRoomId}
               >
                 Generate
               </button>
               <button
                 type="button"
-                className="p-2 text-[#7851a9] bg-white font-semibold rounded-md shadow-md"
+                className="p-2 text-[#4454b4] bg-white font-semibold rounded-md shadow-md"
                 onClick={handleCopy}
               >
                 Copy
@@ -88,7 +88,7 @@ const CreateRoom = ({ socket, setUser }) => {
         </div>
 
         <button
-          className="p-2 bg-[#7851a9] my-12 text-white font-semibold rounded-md"
+          className="p-2 bg-[#4454b4] my-12 text-white font-semibold rounded-md"
           onClick={handleGenerateRoom}
         >
           Generate Room
