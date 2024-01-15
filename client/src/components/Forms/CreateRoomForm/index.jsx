@@ -3,95 +3,99 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
+import { User } from "lucide-react";
 
-const CreateRoom = ({socket, setUser}) => {
-    const [roomId, setRoomId] = useState("");
-    const [name, setName] = useState("");
+const CreateRoom = ({ socket, setUser }) => {
+  const [roomId, setRoomId] = useState("");
+  const [name, setName] = useState("");
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    //generating random ID
-    const generateRandomString = (length) => {
-        return GeneraterandString(length)
+  //generating random ID
+  const generateRandomString = (length) => {
+    return GeneraterandString(length);
+  };
+
+  const handleGenerateRoomId = () => {
+    setRoomId(generateRandomString(10));
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(roomId);
+  };
+
+  const handleGenerateRoom = (e) => {
+    e.preventDefault(); //to prevent the default behaviour
+
+    const userData = {
+      name,
+      roomId,
+      userId: generateRandomString(5),
+      host: true,
+      presenter: true,
     };
 
-    const handleGenerateRoomId = () => {
-        setRoomId(generateRandomString(10))
-    }
+    setUser(userData);
+    console.log(userData);
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(roomId);
-    }
+    //emit user details
+    socket.emit("userJoinedRoom", userData);
 
-    const handleGenerateRoom = (e) => {
-        e.preventDefault(); //to prevent the default behaviour
+    // navigate to the whiteboard page
+    navigate(`/${roomId}`);
+  };
 
-        const userData = {
-            name,
-            roomId,
-            userId: generateRandomString(5),
-            host: true,
-            presenter: true,
-        }
+  return (
+    <>
+      <form className="">
+        <div className="flex justify-start my-4 items-center gap-3">
+          <User size={30} color="#7851a9" />
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md focus:text-[#7851a9] focus:outline-[#7851a9]"
+          ></input>
+        </div>
 
-        setUser(userData);
-        console.log(userData);
-        
-        //emit user details
-        socket.emit("userJoinedRoom", userData)
+        <div className="flex w-[100%]">
+          <div className="flex justify-center items-center gap-2">
+            <input
+              type="text"
+              placeholder="Generate room code"
+              value={roomId}
+              className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#7851a9] focus:outline-[#7851a9]"
+              disabled
+            ></input>
+            <div className="flex justify-center items-center gap-2">
+              <button
+                type="button"
+                className="p-2 bg-[#7851a9] text-white font-semibold rounded-md"
+                onClick={handleGenerateRoomId}
+              >
+                Generate
+              </button>
+              <button
+                type="button"
+                className="p-2 text-[#7851a9] bg-white font-semibold rounded-md shadow-md"
+                onClick={handleCopy}
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
 
-        // navigate to the whiteboard page
-        navigate(`/${roomId}`);
-    }
+        <button
+          className="p-2 bg-[#7851a9] my-12 text-white font-semibold rounded-md"
+          onClick={handleGenerateRoom}
+        >
+          Generate Room
+        </button>
+      </form>
+    </>
+  );
+};
 
-    return (
-        <>
-            <form className="form col-md-12 mt-5">
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="Enter your name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="form-control my-2"
-                    ></input>
-                </div>
-                <div className="from-group border">
-                    <div className="input-group d-flex align-items-center justify-content-center">
-                        <input
-                            type="text"
-                            placeholder="Generate room code"
-                            value={roomId}
-                            className="form-control my-2 border-0"
-                            disabled
-                        ></input>
-                        <div className="input-group-append">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-sm me-1"
-                                onClick={handleGenerateRoomId}
-                            >
-                                Generate
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-outline-danger btn-sm me-1"
-                                onClick={handleCopy}
-                            >
-                                Copy
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <button
-                    className="mt-4 btn btn-primary btn-block form-control"
-                    onClick={handleGenerateRoom}
-                >
-                    Generate Room
-                </button>
-            </form>
-        </>
-    )
-}
-
-export default CreateRoom
+export default CreateRoom;
