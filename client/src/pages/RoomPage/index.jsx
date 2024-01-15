@@ -247,6 +247,7 @@ export const RoomPage = ({ user, socket }) => {
             onClick={(e) => {
               e.preventDefault();
               setIsUserPanel(true);
+              setIsChatBox(false);
             }}
           >
             Peoples
@@ -256,6 +257,7 @@ export const RoomPage = ({ user, socket }) => {
             onClick={(e) => {
               e.preventDefault();
               setIsChatBox(true);
+              setIsUserPanel(false);
             }}
           >
             Chat
