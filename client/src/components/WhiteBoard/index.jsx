@@ -17,6 +17,20 @@ export const WhiteBoard = ({
 }) => {
   const [isDrawing, setIsdrawing] = useState(false);
 
+  //getting the canvas referance and context on component Mount
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    canvas.height = window.innerHeight * 0.89;
+    canvas.width = window.innerWidth;
+    const ctx = canvas.getContext("2d");
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+
+    ctxRef.current = ctx;
+  }, []);
+
   useEffect(() => {
     const roughCanvas = rough.canvas(canvasRef.current);
     console.log("whiteboard");
@@ -51,26 +65,12 @@ export const WhiteBoard = ({
     socket.on("onErase", ({ x1, y1, x2, y2 }) => {
       console.log("onErase called");
 
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
+      // const canvas = document.getElementById("canvas");
+      const ctx = canvasRef.current.getContext("2d");
 
       ctx.clearRect(x1, y1, x2, y2);
     });
   }, [elements, socket]);
-
-  //getting the canvas referance and context on component Mount
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.height = window.innerHeight * 0.89;
-    canvas.width = window.innerWidth;
-    const ctx = canvas.getContext("2d");
-
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-
-    ctxRef.current = ctx;
-  }, []);
 
   //<----------Mouse events handles starts here---------- !>
 
@@ -208,7 +208,6 @@ export const WhiteBoard = ({
             }
           });
         });
-
         socket.emit("erase", { path: newPath });
 
         ctx.clearRect(
@@ -316,7 +315,7 @@ export const WhiteBoard = ({
         style={{ borderStyle: "dashed", borderColor: "gray" }}
         className="rounded-5 overflow-hidden"
       >
-        <canvas ref={canvasRef} id="canvas" />
+        <canvas ref={canvasRef} />
       </div>
     </div>
   );
