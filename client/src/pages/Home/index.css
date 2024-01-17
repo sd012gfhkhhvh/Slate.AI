@@ -5,8 +5,9 @@
 }
 
 body {
-  background-image: url("../../assets/backgroundImg-2.png");
-  background-size: cover; 
+  overflow-x: hidden;
+  /* background-image: url("../../assets/backgroundImg-2.png"); */
+  /* background-size: cover; */
 }
 
 .main-home {
@@ -15,19 +16,20 @@ body {
 }
 
 .home-content {
-    height: 70%;
+  height: 70%;
 }
 
-.content-box > h1{
-    font-size: 50px;
+.content-box > h1 {
+  font-size: 50px;
 }
 
 .img-wrapper {
-    height: 80%;
-    width: 100%;
+  height: 80%;
+  width: 100%;
 }
 
 .logo {
-    height: 2rem;
-    width: 2rem;
+  height: 2rem;
+  width: 2rem;
 }
+
