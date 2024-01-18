@@ -4,30 +4,27 @@
   box-sizing: border-box;
 }
 
-body {
-  background-image: url("../../assets/backgroundImg-2.png");
-  background-size: cover; 
-}
-
 .main-home {
+  background-image: url("../../assets/backgroundImg-2.png");
+  background-size: cover;
   height: 100vh;
   width: 100vw;
 }
 
 .home-content {
-    height: 70%;
+  height: 70%;
 }
 
-.content-box > h1{
-    font-size: 50px;
+.content-box > h1 {
+  font-size: 50px;
 }
 
 .img-wrapper {
-    height: 80%;
-    width: 100%;
+  height: 80%;
+  width: 100%;
 }
 
 .logo {
-    height: 2rem;
-    width: 2rem;
+  height: 2rem;
+  width: 2rem;
 }
