@@ -15,7 +15,7 @@ export const Home = () => {
     e.preventDefault();
     navigate(`/form`);
   };
-
+  
   return (
     <>
       <Navbar />
