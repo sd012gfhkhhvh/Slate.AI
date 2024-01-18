@@ -15,7 +15,6 @@ export const Home = () => {
     e.preventDefault();
     navigate(`/form`);
   }
-  //bootstrap ki maa ki chut
   return (
     <div className='main-home'>
       <Navbar />
