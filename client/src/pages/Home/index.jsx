@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-import './index.css'
 import { useNavigate } from "react-router-dom";
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import { Footer } from "../../components/Footer";
+import { Navbar } from "../../components/Navbar";
+import "./index.css";
 
 //icons and images
-import nextIcon from '../../assets/nextArrow.png'
-import demoImg from '../../assets/slateAI-canvas.png'
+import { MoveRight } from "lucide-react";
+import demoImg from "../../assets/slateAI-canvas.png";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -14,30 +14,40 @@ export const Home = () => {
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/form`);
-  }
-  //bootstrap ki maa ki chut
+  };
+
   return (
-    <div className='main-home'>
+    <>
       <Navbar />
-      <div className="home-content container-fluid row d-flex align-items-center justify-content-center">
-        <div className="form-box col-md-5 form-box p-5 mx-auto d-flex flex-column align-items-start">
-          <div className='content-box w-75 mb-4'>
-            <h1 className='text-secondary'>The Web Whiteboard for Instant Collaboration</h1>
-          </div>
-          <div className='d-flex'>
-            <button onClick={handleClick} className='btn btn-outline-danger btn-lg'>
+
+      <section className="flex justify-center items-center">
+        <div className="flex flex-col md:flex-row justify-center items-center h-[100vh] w-[90vw] md:pt-20 max-w-[2000px] ">
+          <div className="md:w-[50%] w-[100%] flex flex-col justify-center md:items-start items-center md:pt-20 md:justify-start h-[100%] ">
+            <h1 className="w-[10ch] lg:text-6xl text-5xl font-semibold text-gray-500">
+              The Web Whiteboard for Instant Collaboration
+            </h1>
+            <button
+              onClick={handleClick}
+              className="rounded-md hover:bg-[#c32f57] text-[#c32f57] hover:text-white transition-all border-2 border-solid border-[#c32f57] p-2 mt-3 font-bold text-xl flex justify-center items-center gap-2"
+            >
               Start Whiteboarding
-              <img src={nextIcon} alt='icon' className='logo ms-3' />
+              <MoveRight />
             </button>
           </div>
-        </div>
-        <div className="form-box col-md-5 form-box d-flex justify-content-center align-items-center mx-auto overflow-hidden">
-          <div className='img-wrapper border border-black rounded-4 overflow-hidden'>
-            <img className="container-fluid h-100 p-0" src={demoImg} alt='img' />
+
+          <div className="md:w-[50%] w-[100%] h-[100%] ">
+            <div className="h-[100%]">
+              <img
+                className="md:h-[50%] object-contain shadow-lg"
+                src={demoImg}
+                alt="img"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <Footer/>
-    </div>
-  )
-}
+      </section>
+
+      <Footer />
+    </>
+  );
+};
