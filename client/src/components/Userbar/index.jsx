@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import "./index.css";
 
 export const Userbar = (prop) => {
   const { usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;

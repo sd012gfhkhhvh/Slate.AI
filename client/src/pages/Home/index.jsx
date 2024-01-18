@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
-
 import { Footer } from "../../components/Footer";
 import { Navbar } from "../../components/Navbar";
 import "./index.css";
 
 //icons and images
 import { MoveRight } from "lucide-react";
-
 import demoImg from "../../assets/slateAI-canvas.png";
 
 export const Home = () => {
@@ -17,7 +15,6 @@ export const Home = () => {
     e.preventDefault();
     navigate(`/form`);
   };
-
   return (
     <>
       <Navbar />

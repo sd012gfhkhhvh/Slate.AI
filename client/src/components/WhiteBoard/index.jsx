@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import rough from "roughjs";
+import "./index.css";
 import { useEffect, useState } from "react";
 
 export const WhiteBoard = ({
@@ -62,6 +63,47 @@ export const WhiteBoard = ({
     ctxRef.current = ctx;
   }, []);
 
+  useEffect(() => {
+    const roughCanvas = rough.canvas(canvasRef.current);
+    console.log("whiteboard");
+
+    socket.on("onDrawPencil", ({ path, strokeColor }) => {
+      console.log("onDrawPencil called");
+      roughCanvas.linearPath(path, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+
+    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
+      console.log("onDrawLine called");
+      roughCanvas.line(x1, y1, x2, y2, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+
+    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
+      console.log("onDrawRect called");
+      roughCanvas.rectangle(x1, y1, x2, y2, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+
+    socket.on("onErase", ({ x1, y1, x2, y2 }) => {
+      console.log("onErase called");
+
+      // const canvas = document.getElementById("canvas");
+      const ctx = canvasRef.current.getContext("2d");
+
+      ctx.clearRect(x1, y1, x2, y2);
+    });
+  }, [elements, socket]);
+
   //<----------Mouse events handles starts here---------- !>
 
   //< *MouseDown event / start of drawing event  !>
@@ -116,6 +158,22 @@ export const WhiteBoard = ({
       ]);
     }
 
+    if (tool === "eraser") {
+      const { offsetX, offsetY } = e.nativeEvent;
+      console.log("mouse down" + "(" + offsetX + "," + offsetY + ")");
+
+      setElements((prevElem) => [
+        ...prevElem,
+        {
+          type: "eraser",
+          offsetX,
+          offsetY,
+          path: [[offsetX, offsetY]],
+          strokeColor: color,
+        },
+      ]);
+    }
+
     setIsdrawing(true);
   };
 
@@ -154,6 +212,42 @@ export const WhiteBoard = ({
           stroke: color,
           strokeWidth: 1,
         });
+      }
+      // Eraser
+      if (tool === "eraser") {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        const eraserSize = 20; // Adjust the eraser size as needed
+        const { offsetX, offsetY } = e.nativeEvent;
+
+        const newPath = [
+          offsetX - eraserSize / 2,
+          offsetY - eraserSize / 2,
+          eraserSize,
+          eraserSize,
+        ];
+
+        setElements((prevElm) => {
+          return prevElm.map((element, index) => {
+            if (index === elements.length - 1) {
+              return {
+                ...element,
+                strokeWidth: offsetX,
+                strokeHeight: offsetY,
+              };
+            } else {
+              return element;
+            }
+          });
+        });
+        socket.emit("erase", { path: newPath });
+
+        ctx.clearRect(
+          offsetX - eraserSize / 2,
+          offsetY - eraserSize / 2,
+          eraserSize,
+          eraserSize,
+        );
       }
     }
   };

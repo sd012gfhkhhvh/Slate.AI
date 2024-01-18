@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import "./index.css";
 
 export const ChatBox = (prop) => {
   const { socket, usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;

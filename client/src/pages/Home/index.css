@@ -4,13 +4,9 @@
   box-sizing: border-box;
 }
 
-body {
-  overflow-x: hidden;
-  /* background-image: url("../../assets/backgroundImg-2.png"); */
-  /* background-size: cover; */
-}
-
 .main-home {
+  background-image: url("../../assets/backgroundImg-2.png");
+  background-size: cover;
   height: 100vh;
   width: 100vw;
 }
@@ -32,4 +28,3 @@ body {
   height: 2rem;
   width: 2rem;
 }
-
