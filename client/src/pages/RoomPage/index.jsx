@@ -176,7 +176,7 @@ export const RoomPage = ({ user, socket }) => {
                 </div>
                 
                  <div className="flex p-2 gap-2 items-center">
-                  <img className="tool-logo" src={rectIcon} alt="icon" />
+                  <img className="tool-logo" src={eraserIcon} alt="icon" />
                   <input
                     type="radio"
                     name="tool"
@@ -309,6 +309,7 @@ export const RoomPage = ({ user, socket }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setIsUserPanel(true);
+                  setIsChatBox(false);
                 }}
               >
                 People
@@ -318,6 +319,7 @@ export const RoomPage = ({ user, socket }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   setIsChatBox(true);
+                  setIsUserPanel(false);
                 }}
               >
                 Chat
