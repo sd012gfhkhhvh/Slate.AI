@@ -13,6 +13,8 @@ import pencilIcon from "../../assets/pencil.png";
 import lineIcon from "../../assets/diagonal-line.png";
 import rectIcon from "../../assets/rounded-rectangle.png";
 
+import eraserIcon from "../../assets/Eraser.png";
+
 export const RoomPage = ({ user, socket }) => {
   const navigate = useNavigate();
 
@@ -172,6 +174,20 @@ export const RoomPage = ({ user, socket }) => {
                     onChange={(e) => setTool(e.target.value)}
                   ></input>
                 </div>
+                
+                 <div className="flex p-2 gap-2 items-center">
+                  <img className="tool-logo" src={rectIcon} alt="icon" />
+                  <input
+                    type="radio"
+                    name="tool"
+                    id="eraser"
+                    value="eraser"
+                    checked={tool === "eraser"}
+                    className="mt-1"
+                    onChange={(e) => setTool(e.target.value)}
+                  ></input>
+                </div>
+
               </div>
             </div>
 
