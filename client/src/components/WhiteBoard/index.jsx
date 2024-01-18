@@ -17,6 +17,38 @@ export const WhiteBoard = ({
 }) => {
   const [isDrawing, setIsdrawing] = useState(false);
 
+  useEffect(() => {
+    const roughCanvas = rough.canvas(canvasRef.current);
+    console.log("whiteboard");
+
+    socket.on("onDrawPencil", ({ path, strokeColor }) => {
+      console.log("onDrawPencil called");
+      roughCanvas.linearPath(path, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+
+    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
+      console.log("onDrawLine called");
+      roughCanvas.line(x1, y1, x2, y2, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+
+    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
+      console.log("onDrawRect called");
+      roughCanvas.rectangle(x1, y1, x2, y2, {
+        roughness: 0,
+        stroke: strokeColor,
+        strokeWidth: 1,
+      });
+    });
+  }, [elements, socket]);
+
   //getting the canvas referance and context on component Mount
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -214,7 +246,7 @@ export const WhiteBoard = ({
           offsetX - eraserSize / 2,
           offsetY - eraserSize / 2,
           eraserSize,
-          eraserSize
+          eraserSize,
         );
       }
     }
@@ -294,7 +326,7 @@ export const WhiteBoard = ({
         lastOffsetY,
         offsetX - lastOffsetX,
         offsetY - lastOffsetY,
-        { roughness: 0, stroke: color, strokeWidth: 1 }
+        { roughness: 0, stroke: color, strokeWidth: 1 },
       );
     }
 

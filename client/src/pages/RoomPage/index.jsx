@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import pencilIcon from "../../assets/pencil.png";
 import lineIcon from "../../assets/diagonal-line.png";
 import rectIcon from "../../assets/rounded-rectangle.png";
-
 import eraserIcon from "../../assets/Eraser.png";
 
 export const RoomPage = ({ user, socket }) => {
@@ -174,8 +173,8 @@ export const RoomPage = ({ user, socket }) => {
                     onChange={(e) => setTool(e.target.value)}
                   ></input>
                 </div>
-                
-                 <div className="flex p-2 gap-2 items-center">
+
+                <div className="flex p-2 gap-2 items-center">
                   <img className="tool-logo" src={eraserIcon} alt="icon" />
                   <input
                     type="radio"
@@ -187,7 +186,6 @@ export const RoomPage = ({ user, socket }) => {
                     onChange={(e) => setTool(e.target.value)}
                   ></input>
                 </div>
-
               </div>
             </div>
 

@@ -1,29 +1,30 @@
 .main-panel {
-    position: fixed;
-    bottom: 6rem;
-    right: 1rem;
-    height: 71%;
-    width: 20rem;
-    z-index: 0;
-    background-color: #e1e1ea;
+  position: fixed;
+  bottom: 6rem;
+  right: 1rem;
+  height: 71%;
+  width: 20rem;
+  z-index: 0;
+  background-color: #e1e1ea;
 }
 
 .chat-container {
-    /* height: 80%; */
-    /* background-color: red; */
+  /* height: 80%; */
+  /* background-color: red; */
 }
 
 .chat-field {
-    overflow-y: auto;
-    height: 19rem;
-    background-color: #c4c4d5;
+  overflow-y: auto;
+  height: 19rem;
+  background-color: #c4c4d5;
 }
 
 .scrollabletextbox {
-    height:2rem;
-    font-size: 82%;
+  height: 2rem;
+  font-size: 82%;
 }
 
 .chats {
-    background-color: #efeff6;
+  background-color: #efeff6;
 }
+

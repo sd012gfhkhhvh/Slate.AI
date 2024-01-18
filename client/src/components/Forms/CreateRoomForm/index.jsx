@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
+import { User } from "lucide-react";
 
 const CreateRoom = ({ socket, setUser }) => {
   const [roomId, setRoomId] = useState("");
@@ -46,36 +47,38 @@ const CreateRoom = ({ socket, setUser }) => {
 
   return (
     <>
-      <form className="  mt-5">
-        <div className="">
+      <form className="">
+        <div className="flex justify-start my-4 items-center gap-3">
+          <User size={30} color="#4454b4" />
           <input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 border-[1px] border-solid border-gray-300 focus:outline-blue-600 w-[100%] rounded-md my-2"
+            className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md focus:text-[#4454b4] focus:outline-[#4454b4]"
           ></input>
         </div>
-        <div className=" border">
-          <div className=" flex items-center justify-center">
+
+        <div className="flex w-[100%]">
+          <div className="flex justify-center items-center gap-2">
             <input
               type="text"
               placeholder="Generate room code"
               value={roomId}
-              className="p-2 border-[1px] border-solid border-gray-300 focus:outline-blue-600 rounded-md"
+              className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#4454b4] focus:outline-[#4454b4]"
               disabled
             ></input>
             <div className="flex justify-center items-center gap-2">
               <button
                 type="button"
-                className="p-2 bg-blue-600 text-white font-bold rounded-md"
+                className="p-2 bg-[#4454b4] text-white font-semibold rounded-md"
                 onClick={handleGenerateRoomId}
               >
                 Generate
               </button>
               <button
                 type="button"
-                className="p-2 border-red-700 border-[1px] border-solid  text-red-700 font-bold rounded-md"
+                className="p-2 text-[#4454b4] bg-white font-semibold rounded-md shadow-md"
                 onClick={handleCopy}
               >
                 Copy
@@ -83,8 +86,9 @@ const CreateRoom = ({ socket, setUser }) => {
             </div>
           </div>
         </div>
+
         <button
-          className="mt-4 p-2 bg-blue-600 text-white font-bold rounded-md w-[100%]"
+          className="p-2 bg-[#4454b4] my-12 text-white font-semibold rounded-md"
           onClick={handleGenerateRoom}
         >
           Generate Room
