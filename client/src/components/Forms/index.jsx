@@ -16,11 +16,9 @@ const Form = ({ socket, setUser }) => {
       </div>
       <div className="h-[25rem] mt-5 md:w-[400px]  p-5 border-2  border-blue-600 border-solid rounded-md mx-auto flex flex-col items-center">
         <h1 className="text-blue-600 font-bold">Join Room</h1>
-        <div className="row h-100 pt-5">
-        </div>
+        <JoinRoom socket={socket} setUser={setUser} />
       </div>
     </div>
   );
 };
-
 export default Form;
