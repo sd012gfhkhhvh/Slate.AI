@@ -99,14 +99,14 @@ export const RoomPage = ({ user, socket }) => {
   return (
     <>
       {/* main div of canvas page */}
-      <div className="flex h-screen lg:flex-row flex-col justify-center items-center gap-2">
-        <div className="lg:w-1/2 w-[90vw] h-[100%]  lg:max-h-[1000px] lg:mt-0 p-3 lg:max-w-[400px] flex flex-col ">
+      <div className="flex h-screen md:flex-row flex-col justify-center items-center gap-2">
+        <div className="md:w-[20%] w-[90vw] h-[100%] p-2 md:p-0 md:max-h-[1000px] md:mt-0  md:max-w-[400px] flex flex-col ">
           {/* toolbar implementation */}
-          <div className="flex flex-col lg:h-[100%]">
-            {/* Undo and Redo Button */}
-            <div className="p-2 flex justify-between items-center w-[100%]">
+          <div className="flex flex-col w-[100%] justify-center items-center md:h-[100%]">
+            {/* Undo and Redo Button element for desktop view, hidden in mobile view */}
+            <div className="p-2 gap-2  justify-center hidden md:flex items-center w-[100%]">
               <button
-                className="p-2 rounded-md bg-[#4454b4] lg:relative  text-white font-semibold"
+                className="p-2 rounded-md bg-[#4454b4] md:relative  text-white font-semibold"
                 onClick={handleUndo}
                 disabled={elements.length <= 0}
               >
@@ -121,9 +121,19 @@ export const RoomPage = ({ user, socket }) => {
               </button>
             </div>
 
+            {/* Leave Room Button component for mobile view, hidden in desktop view */}
+            <div className="md:hidden mb-3 mt-16 ">
+              <button
+                onClick={handleLeaveRoom}
+                className="p-2 w-[90vw] max-w-[300px] rounded-md bg-[#c23f57] text-white font-semibold"
+              >
+                Leave Room
+              </button>
+            </div>
+
             {/* Choose drawing element start */}
-            <div className="flex justify-center items-center lg:h-[80%] ">
-              <div className="flex  lg:flex-col border-[1px] rounded-md border-black border-solid">
+            <div className="flex justify-center mt-10 items-center md:h-[80%] ">
+              <div className="flex  md:flex-col border-[1px] rounded-md border-black border-solid">
                 <div className="flex p-2 gap-2 items-center">
                   <img className="tool-logo" src={pencilIcon} alt="icon" />
                   <input
@@ -165,9 +175,33 @@ export const RoomPage = ({ user, socket }) => {
               </div>
             </div>
 
-            <div className="flex justify-between mt-4 items-center">
-              {/* Color picker */}
-              <div className="">
+            {/* Color picker element for desktop view, hidden in mobile view */}
+            <div className="hidden md:block">
+              <div className="flex items-center">
+                <label htmlFor="color">Color: </label>
+                <input
+                  type="color"
+                  id="color"
+                  className="ml-2"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                ></input>
+              </div>
+            </div>
+
+            {/* Leave Room Button for desktop view, hidden in mobile view */}
+            <div className="hidden md:mt-3 md:block">
+              <button
+                onClick={handleLeaveRoom}
+                className="p-2 rounded-md bg-[#c23f57] text-white font-semibold"
+              >
+                Leave Room
+              </button>
+            </div>
+
+            <div className="flex w-[100%] justify-between mt-4 items-center">
+              {/* color picker for mobile view, hidden in desktop view */}
+              <div className="md:hidden">
                 <div className="flex items-center">
                   <label htmlFor="color">Color: </label>
                   <input
@@ -180,20 +214,30 @@ export const RoomPage = ({ user, socket }) => {
                 </div>
               </div>
 
-              {/* Leave Room Button */}
-              <div className="">
-                <button
-                  onClick={handleLeaveRoom}
-                  className="p-2 rounded-md bg-[#c23f57] text-white font-semibold"
-                >
-                  Leave Room
-                </button>
+              {/* undo and redo button for mobile view, hidden in desktop view */}
+              <div className="flex  md:hidden justify-between items-center">
+                <div className="p-2  justify-center md:hidden flex items-center w-[100%]">
+                  <button
+                    className="p-2 rounded-md bg-[#4454b4] md:relative  text-white font-semibold"
+                    onClick={handleUndo}
+                    disabled={elements.length <= 0}
+                  >
+                    Undo
+                  </button>
+                  <button
+                    className="p-2 rounded-md border-[#4454b4] border-solid border-[1px] text-[#4454b4] font-semibold"
+                    onClick={handleRedo}
+                    disabled={removedElements.length <= 0}
+                  >
+                    Redo
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:w-1/2 w-[90vw] lg:h-[100%] h-[60%] my-3 lg:my-0 lg:max-h-[1000px]  flex flex-col justify-center lg:max-w-[1500px] items-center">
+        <div className="md:w-[60%] w-[90vw] md:h-[100%] h-[60%] my-3 md:my-0 md:max-h-[1000px]  flex flex-col justify-center md:max-w-[1500px] items-center">
           {/* Whiteboard Implementation */}
           <div className="w-[100%] h-[100%] border-2 my-2 border-black border-solid rounded-md ">
             <WhiteBoard
@@ -229,11 +273,11 @@ export const RoomPage = ({ user, socket }) => {
           )}
         </div>
 
-        <div className="lg:w-1/4 w-[90vw] h-[100%]  lg:max-h-[1000px] flex flex-col p-3 mb-10 lg:max-w-[400px] lg:mb-0 ">
+        <div className="md:w-[20%] md:mt-2 w-[90vw] h-[100%]  md:max-h-[1000px] flex flex-col p-3 mb-10 md:max-w-[400px] md:mb-0 ">
           {/* Utis Button */}
-          <div className=" lg:flex-col flex  justify-between lg:h-[100%] w-[100%] ">
+          <div className=" md:flex-col flex  justify-between md:h-[100%] w-[100%] ">
             {/* Clear Canvas Button */}
-            <div className="flex justify-between lg:justify-center items-center">
+            <div className="flex justify-between md:justify-center items-center">
               <button
                 onClick={handleClearCanvas}
                 className="bg-white border-2 border-[#c23f57] border-solid text-[#c23f57] p-2 rounded-md transition-all"
@@ -242,8 +286,8 @@ export const RoomPage = ({ user, socket }) => {
               </button>
             </div>
 
-            <div className="lg:block  hidden bg-white w-[100%] h-[80%]"></div>
-            <div className="flex justify-center items-center lg:relative lg:-top-[45px] gap-2 ">
+            <div className="md:block hidden bg-white w-[100%] h-[80%]"></div>
+            <div className="flex justify-center items-center md:relative md:-top-[10px] gap-2 ">
               <button
                 className="p-2 rounded-md bg-[#1995D1] text-white font-semibold"
                 onClick={(e) => {
