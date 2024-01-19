@@ -58,18 +58,18 @@ export const ChatBox = (prop) => {
         </div>
 
         {/* textarea */}
-        <div className="px-2 flex w-[100%] flex-col items-center justify-center">
+        <div className="px-2 w-[100%] flex items-center justify-center">
           <textarea
             type="text"
             placeholder="Enter message"
             value={input}
             onChange={handleInput}
-            className="h-[120px] min-h-[50px] rounded-md focus:outline-[#4454b4] focus:text-[#4454b4] max-h-[120px] p-2 m-2 w-[100%] mr-3 "
+            className="min-h-[40px] rounded-md focus:outline-[#4454b4] text-[#4454b4] max-h-[100px] p-2 m-2 w-[100%] mr-3 "
           ></textarea>
-          <div className="w-[100%]">
+          <div className="">
             <button
               type="button"
-              className="p-2 w-[100%] mb-2 mt-1 rounded-md bg-[#4454b4] text-white font-bold"
+              className="p-2 w-[100%] mb-2 rounded-md bg-[#4454b4] text-white font-bold"
               onClick={handleSubmit}
             >
               Send
