@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
 import { KeyRound, User } from "lucide-react";

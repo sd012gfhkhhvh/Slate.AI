@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import pencilIcon from "../../assets/pencil.png";
 import lineIcon from "../../assets/diagonal-line.png";
 import rectIcon from "../../assets/rounded-rectangle.png";
-
 import eraserIcon from "../../assets/Eraser.png";
 
 export const RoomPage = ({ user, socket }) => {

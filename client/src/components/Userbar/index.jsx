@@ -11,7 +11,6 @@ export const Userbar = (prop) => {
           className="p-2 mr-2 rounded-md bg-[#4454b4] text-white font-bold"
           onClick={() => {
             setIsUserPanel(false);
-
             setIsChatBox(false);
           }}
         >
