@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
+import { KeyRound, User } from "lucide-react";
 
 const JoinRoom = ({ socket, setUser }) => {
   const [name, setName] = useState("");
@@ -33,29 +34,33 @@ const JoinRoom = ({ socket, setUser }) => {
 
   return (
     <>
-      <form className="w-[100%]">
-        <div className="">
+      <form className="">
+        <div className="flex justify-start my-4 items-center gap-3">
+          <User size={30} color="#c32f57" />
           <input
             type="text"
             placeholder="Enter your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 border-[1px] border-solid border-gray-300 focus:outline-blue-600 w-[100%] rounded-md my-2"
+            className="p-2 rounded-2xl w-[250px] md:w-[280px] shadow-md focus:text-[#c32f57] focus:outline-[#c32f57]"
           ></input>
         </div>
 
-        <div className="">
-          <input
-            type="text"
-            placeholder="Enter Room Id"
-            value={roomId}
-            onChange={(e) => setRoomId(e.target.value)}
-            className="p-2 border-[1px] border-solid border-gray-300 focus:outline-blue-600 w-[100%] rounded-md my-2"
-          ></input>
+        <div className="flex w-[100%]">
+          <div className="flex justify-center items-center gap-2">
+            <KeyRound size={30} color="#c32f57" />
+            <input
+              type="text"
+              placeholder="Enter Room Id"
+              value={roomId}
+              onChange={(e) => setRoomId(e.target.value)}
+              className="p-2 ml-2 rounded-2xl w-[250px] md:w-[280px] shadow-md focus:text-[#c32f57] focus:outline-[#c32f57]"
+            ></input>
+          </div>
         </div>
 
         <button
-          className="mt-4 p-2 bg-blue-600 text-white font-bold rounded-md w-[100%]"
+          className="p-2 bg-[#c32f57] my-12 text-white font-semibold rounded-md"
           onClick={handleJoinRoom}
         >
           Enter Room

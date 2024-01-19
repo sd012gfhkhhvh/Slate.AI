@@ -5,10 +5,10 @@ export const Userbar = (prop) => {
   const { usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;
   console.log("Prop: " + prop);
   return (
-    <div className="fixed overflow-y-scroll bottom-[6rem] right-[1rem] h-[71%] w-[20rem] z-0 bg-[#e1e1ea]  flex flex-col justify-start border-2 border-solid border-black rounded-md">
+    <div className="fixed bottom-[6rem] right-[1rem] h-[71%] w-[20rem] z-0 bg-[#e1e1ea]  flex flex-col justify-start border-2 border-solid border-black rounded-md">
       <div className="flex justify-end my-2">
         <button
-          className="p-2 rounded-md bg-[#4454b4] text-white font-bold"
+          className="p-2 mr-2 rounded-md bg-[#4454b4] text-white font-bold"
           onClick={() => {
             setIsUserPanel(false);
 
