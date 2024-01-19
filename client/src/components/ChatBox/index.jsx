@@ -64,12 +64,12 @@ export const ChatBox = (prop) => {
             placeholder="Enter message"
             value={input}
             onChange={handleInput}
-            className="h-[50px] p-2 m-2 w-[100%] mr-3 "
+            className="h-[120px] min-h-[50px] rounded-md focus:outline-[#4454b4] focus:text-[#4454b4] max-h-[120px] p-2 m-2 w-[100%] mr-3 "
           ></textarea>
           <div className="w-[100%]">
             <button
               type="button"
-              className="p-2 w-[100%] mb-2 rounded-md bg-[#4454b4] text-white font-bold"
+              className="p-2 w-[100%] mb-2 mt-1 rounded-md bg-[#4454b4] text-white font-bold"
               onClick={handleSubmit}
             >
               Send
