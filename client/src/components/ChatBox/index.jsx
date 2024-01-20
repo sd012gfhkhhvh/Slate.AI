@@ -29,7 +29,7 @@ export const ChatBox = (prop) => {
   };
 
   return (
-    <div className="fixed overflow-y-scroll bottom-[6rem] right-[1rem] h-[71%] w-[20rem] z-0 bg-[#e1e1ea] flex flex-col justify-start border-[1px] border-solid border-black rounded-md">
+    <div className="fixed bottom-[6rem] right-[1rem] h-[71%] w-[20rem] z-0 bg-[#e1e1ea] flex flex-col justify-start border-[1px] border-solid border-black rounded-md">
       {/* closeButton */}
       <div className="flex justify-end m-2">
         <button
@@ -58,15 +58,15 @@ export const ChatBox = (prop) => {
         </div>
 
         {/* textarea */}
-        <div className="px-2 flex flex-col align-center justify-center">
+        <div className="px-2 w-[100%] flex items-center justify-center">
           <textarea
             type="text"
             placeholder="Enter message"
             value={input}
             onChange={handleInput}
-            className="h-[100px] m-2 w-[100%] mr-3 "
+            className="min-h-[40px] rounded-md focus:outline-[#4454b4] text-[#4454b4] max-h-[100px] p-2 m-2 w-[100%] mr-3 "
           ></textarea>
-          <div className="input-group-append">
+          <div className="">
             <button
               type="button"
               className="p-2 w-[100%] mb-2 rounded-md bg-[#4454b4] text-white font-bold"

@@ -7,7 +7,7 @@ import mail from "../../assets/mailIcon.png";
 
 export const Footer = () => {
   return (
-    <div className="h-[15%] bg-[#eae2e2] p-2  flex md:justify-between flex-col  md:flex-row  items-center">
+    <div className="h-[15%] mt-16 bg-white p-2 opacity-75  flex md:justify-between flex-col  md:flex-row  items-center">
       <div className="flex justify-between items-center">
         <img className="ml-5 mr-3 w-[40px]" src={slateLogo} alt="img" />
         <span className="text-gray-700 "> &#169; 2024 Slate.AI</span>

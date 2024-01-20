@@ -100,8 +100,8 @@ export const RoomPage = ({ user, socket }) => {
   return (
     <>
       {/* main div of canvas page */}
-      <div className="flex h-screen md:flex-row flex-col justify-center items-center gap-2">
-        <div className="md:w-[20%] w-[90vw] h-[100%] p-2 md:p-0 md:max-h-[1000px] md:mt-0  md:max-w-[400px] flex flex-col ">
+      <div className="flex h-screen py-2 md:flex-row flex-col justify-center items-center gap-2">
+        <div className="md:w-[15%] w-[90vw] h-[100%] p-2 md:p-0 md:max-h-[1000px] md:mt-0  md:max-w-[400px] flex flex-col ">
           {/* toolbar implementation */}
           <div className="flex flex-col w-[100%] justify-center items-center md:h-[100%]">
             {/* Undo and Redo Button element for desktop view, hidden in mobile view */}
@@ -230,7 +230,7 @@ export const RoomPage = ({ user, socket }) => {
 
               {/* undo and redo button for mobile view, hidden in desktop view */}
               <div className="flex  md:hidden justify-between items-center">
-                <div className="p-2  justify-center md:hidden flex items-center w-[100%]">
+                <div className="p-2 gap-2 justify-center md:hidden flex items-center w-[100%]">
                   <button
                     className="p-2 rounded-md bg-[#4454b4] md:relative  text-white font-semibold"
                     onClick={handleUndo}
@@ -251,9 +251,9 @@ export const RoomPage = ({ user, socket }) => {
           </div>
         </div>
 
-        <div className="md:w-[60%] w-[90vw] md:h-[100%] h-[60%] my-3 md:my-0 md:max-h-[1000px]  flex flex-col justify-center md:max-w-[1500px] items-center">
+        <div className="md:w-[65%] w-[90vw] md:h-[100%] h-[60%] my-3 md:my-0 md:max-h-[1000px]  flex flex-col justify-center md:max-w-[1500px] items-center">
           {/* Whiteboard Implementation */}
-          <div className="w-[100%] h-[100%] border-2 my-2 border-black border-solid rounded-md ">
+          <div className="w-[100%] h-[100%] border-4 my-2 border-black border-dotted rounded-md ">
             <WhiteBoard
               canvasRef={canvasRef}
               ctxRef={ctxRef}

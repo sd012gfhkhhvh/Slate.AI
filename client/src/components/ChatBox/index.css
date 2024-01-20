@@ -8,11 +8,6 @@
   background-color: #e1e1ea;
 }
 
-.chat-container {
-  /* height: 80%; */
-  /* background-color: red; */
-}
-
 .chat-field {
   overflow-y: auto;
   height: 19rem;
