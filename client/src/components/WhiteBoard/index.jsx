@@ -11,6 +11,21 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
   useEffect(() => {
     const roughCanvas = rough.canvas(canvasRef.current)
     console.log("whiteboard");
+    console.log(canvasRef.current);
+        if(elements.length>0){
+          ctxRef.current.clearRect(0 ,0 ,canvasRef.current.height , canvasRef.current.width)
+        }
+        elements.forEach(element => {
+      if(element.type==="line"){
+        roughCanvas.draw(rough.generator().line(element.offsetX , element.offsetY , element.width , element.height, { roughness: 0, stroke: color, strokeWidth: 1 }))
+      }
+      else if(element.type==="rect"){
+        roughCanvas.draw(rough.generator().rectangle(element.offsetX , element.offsetY , element.width , element.height, { roughness: 0, stroke: color, strokeWidth: 1 }))
+      }
+      else if (element.type==="pencil")
+      roughCanvas.linearPath(element.path, { roughness: 0, stroke: color, strokeWidth: 1 })
+
+    });
 
     socket.on("onDrawPencil", ({ path, strokeColor }) => {
       console.log("onDrawPencil called");
@@ -77,8 +92,8 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           type: "line",
           offsetX,
           offsetY,
-          strokeWidth: undefined,
-          strokeHeight: undefined,
+          width: offsetX,
+          height: offsetY,
           strokeColor: color,
         },
       ])
@@ -94,6 +109,8 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
           type: "rect",
           offsetX,
           offsetY,
+          width: 0,
+          height: 0,
           strokeColor: color,
         },
       ])
@@ -132,7 +149,42 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
 
         socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor});
         //draw the path
-        roughCanvas.linearPath(newPath, { roughness: 0, stroke: color, strokeWidth: 1 })
+        // roughCanvas.linearPath(newPath, { roughness: 0, stroke: color, strokeWidth: 1 })
+      }
+
+      else if (tool === "line") {
+        const { offsetX, offsetY } = e.nativeEvent;
+        setElements((prevElm) => {
+          return prevElm.map((element, index) => {
+            if (index === (elements.length - 1)) {
+              return {
+                ...element,
+                width:offsetX,
+                height:offsetY
+              }
+            } else {
+              return element
+            }
+          })
+        })
+        // socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor});
+      }
+      else if (tool === "rect") {
+        const { offsetX, offsetY } = e.nativeEvent;
+        setElements((prevElm) => {
+          return prevElm.map((element, index) => {
+            if (index === (elements.length - 1)) {
+              return {
+                ...element,
+                width:offsetX - element.offsetX,
+                height:offsetY - element.offsetY
+              }
+            } else {
+              return element
+            }
+          })
+        })
+        // socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor});
       }
     }
   }
@@ -146,58 +198,58 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
 
     //---Line---
     if (tool === "line") {
-      const lastOffsetX = elements[elements.length - 1].offsetX;
-      const lastOffsetY = elements[elements.length - 1].offsetY;
-      const { offsetX, offsetY } = e.nativeEvent;
-      const newPath = [lastOffsetX, lastOffsetY, offsetX, offsetY]
-      console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
+    const lastOffsetX = elements[elements.length - 1].offsetX;
+    const lastOffsetY = elements[elements.length - 1].offsetY;
+    const { offsetX, offsetY } = e.nativeEvent;
+    const newPath = [lastOffsetX, lastOffsetY, offsetX, offsetY]
+    console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
 
-      const strokeColor = elements[elements.length - 1].strokeColor;
+    const strokeColor = elements[elements.length - 1].strokeColor;
 
-      //ref - line (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
-      setElements((prevElm) => {
-        return prevElm.map((element, index) => {
-          if (index === (elements.length - 1)) {
-            return {
-              ...element,
-              strokeWidth: offsetX,
-              strokeHeight: offsetY
-            }
+    //ref - line (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
+    setElements((prevElm) => {
+    return prevElm.map((element, index) => {
+    if (index === (elements.length - 1)) {
+    return {
+    ...element,
+    strokeWidth: offsetX,
+    strokeHeight: offsetY
+    }
           } else {
-            return element
-          }
+    return element
+    }
         })
-      })
-      socket.emit("drawLine", { path: newPath, strokeColor: strokeColor})
-      roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness: 0, stroke: color, strokeWidth: 1 })
+    })
+    socket.emit("drawLine", { path: newPath, strokeColor: strokeColor})
+    roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness: 0, stroke: color, strokeWidth: 1 })
     }
 
     //Rectrangle
     if (tool === "rect") {
-      const lastOffsetX = elements[elements.length - 1].offsetX;
-      const lastOffsetY = elements[elements.length - 1].offsetY;
-      const { offsetX, offsetY } = e.nativeEvent;
-      const newPath = [lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY)]
-      console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
+    const lastOffsetX = elements[elements.length - 1].offsetX;
+    const lastOffsetY = elements[elements.length - 1].offsetY;
+    const { offsetX, offsetY } = e.nativeEvent;
+    const newPath = [lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY)]
+    console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
 
-      const strokeColor = elements[elements.length - 1].strokeColor;
+    const strokeColor = elements[elements.length - 1].strokeColor;
 
-      //ref - rectrangle (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
-      setElements((prevElm) => {
-        return prevElm.map((element, index) => {
-          if (index === (elements.length - 1)) {
-            return {
-              ...element,
-              strokeWidth: offsetX,
-              strokeHeight: offsetY,
-            }
+    //ref - rectrangle (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
+    setElements((prevElm) => {
+    return prevElm.map((element, index) => {
+    if (index === (elements.length - 1)) {
+    return {
+    ...element,
+    strokeWidth: offsetX,
+    strokeHeight: offsetY,
+    }
           } else {
-            return element
-          }
+    return element
+    }
         })
-      })
-      socket.emit("drawRect", { path: newPath, strokeColor: strokeColor })
-      roughCanvas.rectangle(lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY), { roughness: 0, stroke: color, strokeWidth: 1 })
+    })
+    socket.emit("drawRect", { path: newPath, strokeColor: strokeColor })
+    roughCanvas.rectangle(lastOffsetX, lastOffsetY, (offsetX - lastOffsetX), (offsetY - lastOffsetY), { roughness: 0, stroke: color, strokeWidth: 1 })
     }
 
     setIsdrawing(false)
