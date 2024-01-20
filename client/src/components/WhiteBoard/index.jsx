@@ -17,38 +17,6 @@ export const WhiteBoard = ({
 }) => {
   const [isDrawing, setIsdrawing] = useState(false);
 
-  useEffect(() => {
-    const roughCanvas = rough.canvas(canvasRef.current);
-    console.log("whiteboard");
-
-    socket.on("onDrawPencil", ({ path, strokeColor }) => {
-      console.log("onDrawPencil called");
-      roughCanvas.linearPath(path, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
-
-    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
-      console.log("onDrawLine called");
-      roughCanvas.line(x1, y1, x2, y2, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
-
-    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
-      console.log("onDrawRect called");
-      roughCanvas.rectangle(x1, y1, x2, y2, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
-  }, [elements, socket]);
-
   //getting the canvas referance and context on component Mount
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -157,23 +125,6 @@ export const WhiteBoard = ({
         },
       ]);
     }
-
-    if (tool === "eraser") {
-      const { offsetX, offsetY } = e.nativeEvent;
-      console.log("mouse down" + "(" + offsetX + "," + offsetY + ")");
-
-      setElements((prevElem) => [
-        ...prevElem,
-        {
-          type: "eraser",
-          offsetX,
-          offsetY,
-          path: [[offsetX, offsetY]],
-          strokeColor: color,
-        },
-      ]);
-    }
-
     setIsdrawing(true);
   };
 
@@ -227,19 +178,6 @@ export const WhiteBoard = ({
           eraserSize,
         ];
 
-        setElements((prevElm) => {
-          return prevElm.map((element, index) => {
-            if (index === elements.length - 1) {
-              return {
-                ...element,
-                strokeWidth: offsetX,
-                strokeHeight: offsetY,
-              };
-            } else {
-              return element;
-            }
-          });
-        });
         socket.emit("erase", { path: newPath });
 
         ctx.clearRect(
