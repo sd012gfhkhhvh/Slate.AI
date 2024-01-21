@@ -64,6 +64,7 @@ io.on("connection", (socket) => {
       x2: path[2],
       y2: path[3],
       strokeColor: strokeColor,
+      path : path
     });
   });
 
@@ -76,6 +77,8 @@ io.on("connection", (socket) => {
       x2: path[2],
       y2: path[3],
       strokeColor: strokeColor,
+      path : path
+
     });
   });
 

@@ -33,13 +33,19 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
       roughCanvas.linearPath(path, { roughness: 0, stroke: strokeColor, strokeWidth: 1 })
     });
 
-    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
+    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor , path }) => {
       console.log("onDrawLine called");
+      if(path.length>0){
+          ctxRef.current.clearRect(0 ,0 ,canvasRef.current.width , canvasRef.current.height)
+        }
       roughCanvas.line(x1, y1, x2, y2, { roughness: 0, stroke: strokeColor, strokeWidth: 1 })
     })
 
-    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
+    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor , path }) => {
       console.log("onDrawRect called");
+      if(path.length>0){
+        ctxRef.current.clearRect(0 ,0 ,canvasRef.current.width , canvasRef.current.height)
+      }
       roughCanvas.rectangle(x1, y1, x2, y2, { roughness: 0, stroke: strokeColor, strokeWidth: 1 })
     })
   }, [elements, socket])
@@ -60,44 +66,44 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
   }, []);
 
   useEffect(() => {
-    const roughCanvas = rough.canvas(canvasRef.current);
-    console.log("whiteboard");
+  const roughCanvas = rough.canvas(canvasRef.current);
+  console.log("whiteboard");
 
-    socket.on("onDrawPencil", ({ path, strokeColor }) => {
-      console.log("onDrawPencil called");
-      roughCanvas.linearPath(path, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
+  socket.on("onDrawPencil", ({ path, strokeColor }) => {
+  console.log("onDrawPencil called");
+  roughCanvas.linearPath(path, {
+  roughness: 0,
+  stroke: strokeColor,
+  strokeWidth: 1,
+  });
+  });
 
-    socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
-      console.log("onDrawLine called");
-      roughCanvas.line(x1, y1, x2, y2, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
+  socket.on("onDrawLine", ({ x1, y1, x2, y2, strokeColor }) => {
+  console.log("onDrawLine called");
+  roughCanvas.line(x1, y1, x2, y2, {
+  roughness: 0,
+  stroke: strokeColor,
+  strokeWidth: 1,
+  });
+  });
 
-    socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
-      console.log("onDrawRect called");
-      roughCanvas.rectangle(x1, y1, x2, y2, {
-        roughness: 0,
-        stroke: strokeColor,
-        strokeWidth: 1,
-      });
-    });
+  socket.on("onDrawRect", ({ x1, y1, x2, y2, strokeColor }) => {
+  console.log("onDrawRect called");
+  roughCanvas.rectangle(x1, y1, x2, y2, {
+  roughness: 0,
+  stroke: strokeColor,
+  strokeWidth: 1,
+  });
+  });
 
-    socket.on("onErase", ({ x1, y1, x2, y2 }) => {
-      console.log("onErase called");
+  socket.on("onErase", ({ x1, y1, x2, y2 }) => {
+  console.log("onErase called");
 
-      // const canvas = document.getElementById("canvas");
-      const ctx = canvasRef.current.getContext("2d");
+  // const canvas = document.getElementById("canvas");
+  const ctx = canvasRef.current.getContext("2d");
 
-      ctx.clearRect(x1, y1, x2, y2);
-    });
+  ctx.clearRect(x1, y1, x2, y2);
+  });
   }, [elements, socket]);
 
   //<----------Mouse events handles starts here---------- !>
@@ -192,6 +198,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
       }
       else if (tool === "line") {
         const { offsetX, offsetY } = e.nativeEvent;
+        const elem = elements[elements.length-1]
         setElements((prevElm) => {
           return prevElm.map((element, index) => {
             if (index === (elements.length - 1)) {
@@ -205,10 +212,11 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
             }
           })
         })
-        // socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor});
+        socket.emit("drawLine", { path :[elem.offsetX , elem.offsetY , elem.width , elem.height ], strokeColor: elem.strokeColor});
       }
       else if (tool === "rect") {
         const { offsetX, offsetY } = e.nativeEvent;
+        const elem = elements[elements.length-1]
         setElements((prevElm) => {
           return prevElm.map((element, index) => {
             if (index === (elements.length - 1)) {
@@ -222,7 +230,7 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
             }
           })
         })
-        // socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor});
+        socket.emit("drawRect", { path :[elem.offsetX , elem.offsetY , elem.width , elem.height ], strokeColor: elem.strokeColor});
       }
     }
   }
@@ -235,32 +243,6 @@ export const WhiteBoard = ({ canvasRef, ctxRef, elements, setElements, tool, col
     console.log("mouse up" + "(" + offsetX + "," + offsetY + ")");
 
     //---Line---
-    if (tool === "line") {
-      const lastOffsetX = elements[elements.length - 1].offsetX;
-      const lastOffsetY = elements[elements.length - 1].offsetY;
-      const { offsetX, offsetY } = e.nativeEvent;
-      const newPath = [lastOffsetX, lastOffsetY, offsetX, offsetY]
-      console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
-
-    const strokeColor = elements[elements.length - 1].strokeColor;
-
-      //ref - line (x1, y1, x2, y2 [, options]) || setting the x2 and y2 as current positions
-      setElements((prevElm) => {
-        return prevElm.map((element, index) => {
-          if (index === (elements.length - 1)) {
-            return {
-              ...element,
-              strokeWidth: offsetX,
-              strokeHeight: offsetY
-            }
-          } else {
-            return element
-          }
-        })
-      })
-      socket.emit("drawLine", { path: newPath, strokeColor: strokeColor})
-      roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, { roughness: 0, stroke: color, strokeWidth: 1 })
-    }
 
     //Rectrangle
     if (tool === "rect") {
