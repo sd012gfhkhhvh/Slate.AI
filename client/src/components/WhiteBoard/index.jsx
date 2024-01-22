@@ -3,7 +3,8 @@
 /* eslint-disable no-unused-vars */
 import rough from "roughjs";
 import "./index.css";
-import { useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { EraserSizeContext } from "../../context/EraserSize";
 
 export const WhiteBoard = ({
   canvasRef,
@@ -15,6 +16,7 @@ export const WhiteBoard = ({
   socket,
   user,
 }) => {
+  const { eraserSize } = useContext(EraserSizeContext);
   const [isDrawing, setIsdrawing] = useState(false);
 
   //getting the canvas referance and context on component Mount
@@ -168,7 +170,6 @@ export const WhiteBoard = ({
       if (tool === "eraser") {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        const eraserSize = 20; // Adjust the eraser size as needed
         const { offsetX, offsetY } = e.nativeEvent;
 
         const newPath = [
@@ -184,7 +185,7 @@ export const WhiteBoard = ({
           offsetX - eraserSize / 2,
           offsetY - eraserSize / 2,
           eraserSize,
-          eraserSize,
+          eraserSize
         );
       }
     }
@@ -264,7 +265,7 @@ export const WhiteBoard = ({
         lastOffsetY,
         offsetX - lastOffsetX,
         offsetY - lastOffsetY,
-        { roughness: 0, stroke: color, strokeWidth: 1 },
+        { roughness: 0, stroke: color, strokeWidth: 1 }
       );
     }
 
