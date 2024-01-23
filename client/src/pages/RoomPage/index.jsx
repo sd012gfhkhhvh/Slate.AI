@@ -29,7 +29,6 @@ export const RoomPage = ({ user, socket }) => {
   const [usersInRoom, setUsersInRoom] = useState([]); // array of users in a room
   const [isUserpanel, setIsUserPanel] = useState(false);
   const [isChatBox, setIsChatBox] = useState(false);
-  const [isMouseOver, setIsMouseOver] = useState(false); //To Know is Eraser is Hover
 
   // update users state
   useEffect(() => {
@@ -100,17 +99,9 @@ export const RoomPage = ({ user, socket }) => {
     });
   };
 
-  const handleMouseLeave = (e) => {
-    // Check if the mouse has left the YourComponent area
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsMouseOver(false);
-    }
-  };
-
-  // Call this function to update eraser size from the parent component
-  const updateEraserSize = (size) => {
+  const openModal = () => {
     if (popupRef.current) {
-      popupRef.current.updateEraserSize(size);
+      popupRef.current.openModal();
     }
   };
 
@@ -193,8 +184,7 @@ export const RoomPage = ({ user, socket }) => {
 
                 <div
                   className="flex p-2 gap-2 items-center"
-                  onMouseOver={() => setIsMouseOver(true)}
-                  onMouseLeave={handleMouseLeave}
+                  onClick={openModal}
                 >
                   <img className="tool-logo" src={eraserIcon} alt="icon" />
                   <input
@@ -206,7 +196,7 @@ export const RoomPage = ({ user, socket }) => {
                     className="mt-1"
                     onChange={(e) => setTool(e.target.value)}
                   ></input>
-                  {isMouseOver && <Popup ref={popupRef} />}
+                  <Popup ref={popupRef} />
                 </div>
               </div>
             </div>
