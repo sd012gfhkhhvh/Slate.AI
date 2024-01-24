@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
 import { KeyRound, User } from "lucide-react";
+import { toast } from "react-toastify";
 
 const JoinRoom = ({ socket, setUser }) => {
   const [name, setName] = useState("");
@@ -13,6 +14,21 @@ const JoinRoom = ({ socket, setUser }) => {
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
+
+    // Validate name and roomId
+    if (!name) {
+      toast.info(`Please enter your name.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    if (!roomId) {
+      toast.info(`Please enter a Room code.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
 
     const userData = {
       name,
@@ -54,13 +70,13 @@ const JoinRoom = ({ socket, setUser }) => {
               placeholder="Enter Room Id"
               value={roomId}
               onChange={(e) => setRoomId(e.target.value)}
-              className="p-2 ml-2 rounded-2xl w-[250px] md:w-[280px] shadow-md focus:text-[#c32f57] focus:outline-[#c32f57]"
+              className="p-2 ml-1 rounded-2xl w-[250px] md:w-[280px] shadow-md focus:text-[#c32f57] focus:outline-[#c32f57]"
             ></input>
           </div>
         </div>
 
         <button
-          className="p-2 bg-[#c32f57] my-12 text-white font-semibold rounded-md"
+          className="p-2 bg-[#c32f57] hover:bg-[#c32f57]/90 my-12 text-white font-semibold rounded-md"
           onClick={handleJoinRoom}
         >
           Enter Room

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GeneraterandString } from "../../../helper/GeneraterandString";
-import { User } from "lucide-react";
+import { User, KeyRound } from "lucide-react";
+import { toast } from "react-toastify";
 
 const CreateRoom = ({ socket, setUser }) => {
   const [roomId, setRoomId] = useState("");
@@ -22,10 +23,30 @@ const CreateRoom = ({ socket, setUser }) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(roomId);
+    if (roomId) {
+      toast.info(`Room Code copied to clipboard.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   };
 
   const handleGenerateRoom = (e) => {
     e.preventDefault(); //to prevent the default behaviour
+
+    // Validate name and roomId
+    if (!name) {
+      toast.info(`Please enter your name.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    if (!roomId) {
+      toast.info(`Please generate a Room code.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
 
     const userData = {
       name,
@@ -59,39 +80,41 @@ const CreateRoom = ({ socket, setUser }) => {
           ></input>
         </div>
 
-        <div className="flex w-[100%]">
+        <div className="flex">
           <div className="flex justify-center items-center gap-2">
+            <KeyRound size={30} color="#4454b4" className="md:hidden block" />
+            <KeyRound size={38} color="#4454b4" className="md:block hidden" />
             <input
               type="text"
               placeholder="Generate room code"
               value={roomId}
-              className="p-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#4454b4] focus:outline-[#4454b4]"
+              className="p-2 ml-1 md:ml-2 rounded-2xl w-[60%] md:w-[80%] shadow-md text-[#4454b4] focus:outline-[#4454b4]"
               disabled
             ></input>
             <div className="flex justify-center items-center gap-2">
               <button
                 type="button"
-                className="p-2 bg-[#4454b4] text-white font-semibold rounded-md"
+                className="p-2 bg-[#4454b4] hover:bg-[#4454b4]/90 text-white font-semibold rounded-md"
                 onClick={handleGenerateRoomId}
               >
                 Generate
-              </button>
-              <button
-                type="button"
-                className="p-2 text-[#4454b4] bg-white font-semibold rounded-md shadow-md"
-                onClick={handleCopy}
-              >
-                Copy
               </button>
             </div>
           </div>
         </div>
 
         <button
-          className="p-2 bg-[#4454b4] my-12 text-white font-semibold rounded-md"
+          className="p-2 bg-[#4454b4] hover:bg-[#4454b4]/90 my-12 text-white font-semibold rounded-md"
           onClick={handleGenerateRoom}
         >
           Generate Room
+        </button>
+        <button
+          type="button"
+          className="p-2 ml-3 text-[#4454b4] bg-white hover:bg-gray-50 font-semibold rounded-md shadow-md"
+          onClick={handleCopy}
+        >
+          Copy Code
         </button>
       </form>
     </>
