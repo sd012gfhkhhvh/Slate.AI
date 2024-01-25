@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./index.css";
+import { MessagesContext } from "../../context/Messages";
 
 export const ChatBox = (prop) => {
   const { socket, usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
+  const { messages, setMessages } = useContext(MessagesContext);
 
   useEffect(() => {
     socket.on("onMessage", (data) => {
@@ -48,12 +50,13 @@ export const ChatBox = (prop) => {
         <div className="p-3 rounded-md">
           <h5 className="text-center text-dark py-1">Room Chat</h5>
           <div className="overflow-y-auto bg-[#c4c4d5] h-[19rem] rounded-md">
-            {messages.map((msg) => (
-              <p
-                key={user.socketId}
-                className="bg-[#efeff6] border-2 border-black border-solid py-1 px-3 my-2 rounded-md"
-              >{`${msg.name}: ${msg.message}`}</p>
-            ))}
+            {messages &&
+              messages.map((msg) => (
+                <p
+                  key={Math.random()}
+                  className="bg-[#efeff6] border-2 border-black border-solid py-1 px-3 my-2 rounded-md"
+                >{`${msg.name}: ${msg.message}`}</p>
+              ))}
           </div>
         </div>
 
