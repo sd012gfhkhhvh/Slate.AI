@@ -7,8 +7,9 @@ import { MessagesContext } from "../../context/Messages";
 export const ChatBox = (prop) => {
   const { socket, usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;
   const [input, setInput] = useState("");
-  // const [messages, setMessages] = useState([]);
   const { messages, setMessages } = useContext(MessagesContext);
+
+  const roomId = user?.roomId;
 
   useEffect(() => {
     socket.on("onMessage", (data) => {
@@ -25,7 +26,7 @@ export const ChatBox = (prop) => {
     e.preventDefault();
     console.log("submit");
     if (input.trim() !== "") {
-      socket.emit("message", { message: input });
+      socket.emit("message", { message: input, roomId });
       setMessages((prevMsg) => [...prevMsg, { message: input, name: "You" }]);
     }
   };
