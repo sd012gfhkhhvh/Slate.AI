@@ -17,14 +17,35 @@ const JoinRoom = ({ socket, setUser }) => {
 
     // Validate name and roomId
     if (!name) {
-      toast.info(`Please enter your name.`, {
+      toast.error(`Please enter your name.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    // Regex for a name with at least 3 characters, only letters, and optional spaces
+
+    const nameRegex = /^[a-zA-Z]{3,}(?:\s[a-zA-Z]+)*$/;
+
+    if (!nameRegex.test(name)) {
+      toast.error(`Please enter a valid name.`, {
         position: toast.POSITION.TOP_CENTER,
       });
       return;
     }
 
     if (!roomId) {
-      toast.info(`Please enter a Room code.`, {
+      toast.error(`Please enter a Room code.`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+
+    // Regex for a Room code with exactly 10 characters, combination of letters and numbers
+    const roomIdRegex = /^[a-zA-Z0-9]{10}$/;
+
+    if (!roomIdRegex.test(roomId)) {
+      toast.error(`Please enter a valid Room code.`, {
         position: toast.POSITION.TOP_CENTER,
       });
       return;
