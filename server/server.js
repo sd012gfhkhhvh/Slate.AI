@@ -91,10 +91,10 @@ io.on("connection", (socket) => {
   });
 
   //handle chat message
-  socket.on("message", ({ message }) => {
+  socket.on("message", ({ message, roomId }) => {
     const user = getUser(socketId);
     if (user) {
-      socket.to(currentRoomId).emit("onMessage", { message, name: user.name });
+      socket.to(roomId).emit("onMessage", { message, name: user.name });
     }
   });
 
