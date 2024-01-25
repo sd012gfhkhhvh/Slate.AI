@@ -1,7 +1,7 @@
-import React, { createContext, useState } from "react";
+import { createContext, useState } from "react";
 const EraserSizeContext = createContext({
   eraserSize: 20,
-  setEraserSize: () => {},
+  setEraserSize: () => { },
 });
 const EraserSizeProvider = ({ children }) => {
   const [eraserSize, setEraserSize] = useState(20);
