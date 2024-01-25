@@ -91,7 +91,7 @@ io.on("connection", (socket) => {
   });
 
   //handle chat message
-  socket.on("message", ({ message, roomId }) => {
+  socket.on("message", ({ message }) => {
     const user = getUser(socketId);
     if (user) {
       socket.to(currentRoomId).emit("onMessage", { message, name: user.name });

@@ -3,7 +3,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./index.css";
 import { MessagesContext } from "../../context/Messages";
-import { useParams } from "react-router-dom";
 
 export const ChatBox = (prop) => {
   const { socket, usersInRoom, user, setIsChatBox, setIsUserPanel } = prop;
