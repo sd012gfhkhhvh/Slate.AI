@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 import rough from "roughjs";
 import "./index.css";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { EraserSizeContext } from "../../context/EraserSize";
 
 export const WhiteBoard = ({
