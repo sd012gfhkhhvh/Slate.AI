@@ -48,17 +48,17 @@ io.on("connection", (socket) => {
   });
 
   //Pencil
-  socket.on("drawPencil", ({ path, strokeColor }) => {
+  socket.on("drawPencil", ({ path, strokeColor, roomId }) => {
     // console.log("drawing pencil...");
     socket
-      .to(currentRoomId)
+      .to(roomId)
       .emit("onDrawPencil", { path: path, strokeColor: strokeColor });
   });
 
   //Line
-  socket.on("drawLine", ({ path, strokeColor }) => {
+  socket.on("drawLine", ({ path, strokeColor, roomId }) => {
     // console.log("drawing line...");
-    socket.to(currentRoomId).emit("onDrawLine", {
+    socket.to(roomId).emit("onDrawLine", {
       x1: path[0],
       y1: path[1],
       x2: path[2],
@@ -68,9 +68,9 @@ io.on("connection", (socket) => {
   });
 
   //Rectrangle
-  socket.on("drawRect", ({ path, strokeColor }) => {
+  socket.on("drawRect", ({ path, strokeColor, roomId }) => {
     // console.log("drawing rect...");
-    socket.to(currentRoomId).emit("onDrawRect", {
+    socket.to(roomId).emit("onDrawRect", {
       x1: path[0],
       y1: path[1],
       x2: path[2],
@@ -80,9 +80,9 @@ io.on("connection", (socket) => {
   });
 
   //Eraser
-  socket.on("erase", ({ path }) => {
+  socket.on("erase", ({ path, roomId }) => {
     // console.log("Eraser");
-    socket.to(currentRoomId).emit("onErase", {
+    socket.to(roomId).emit("onErase", {
       x1: path[0],
       y1: path[1],
       x2: path[2],

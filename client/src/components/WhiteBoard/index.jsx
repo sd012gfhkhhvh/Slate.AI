@@ -158,7 +158,11 @@ export const WhiteBoard = ({
           });
         });
 
-        socket.emit("drawPencil", { path: newPath, strokeColor: strokeColor });
+        socket.emit("drawPencil", {
+          path: newPath,
+          strokeColor: strokeColor,
+          roomId: user?.roomId,
+        });
         //draw the path
         roughCanvas.linearPath(newPath, {
           roughness: 0,
@@ -179,7 +183,7 @@ export const WhiteBoard = ({
           eraserSize,
         ];
 
-        socket.emit("erase", { path: newPath });
+        socket.emit("erase", { path: newPath, roomId: user?.roomId });
 
         ctx.clearRect(
           offsetX - eraserSize / 2,
@@ -222,7 +226,11 @@ export const WhiteBoard = ({
           }
         });
       });
-      socket.emit("drawLine", { path: newPath, strokeColor: strokeColor });
+      socket.emit("drawLine", {
+        path: newPath,
+        strokeColor: strokeColor,
+        roomId: user?.roomId,
+      });
       roughCanvas.line(lastOffsetX, lastOffsetY, offsetX, offsetY, {
         roughness: 0,
         stroke: color,
@@ -259,7 +267,11 @@ export const WhiteBoard = ({
           }
         });
       });
-      socket.emit("drawRect", { path: newPath, strokeColor: strokeColor });
+      socket.emit("drawRect", {
+        path: newPath,
+        strokeColor: strokeColor,
+        roomId: user?.roomId,
+      });
       roughCanvas.rectangle(
         lastOffsetX,
         lastOffsetY,
