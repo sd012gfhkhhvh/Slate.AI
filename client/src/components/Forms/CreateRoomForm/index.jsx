@@ -68,6 +68,7 @@ const CreateRoom = ({ socket, setUser }) => {
 
     setUser(userData);
     console.log(userData);
+    localStorage.setItem("socketUserData", JSON.stringify(userData));
 
     //emit user details
     socket.emit("userJoinedRoom", userData);

@@ -60,6 +60,7 @@ const JoinRoom = ({ socket, setUser }) => {
     };
 
     console.log(userData);
+    localStorage.setItem("socketUserData", JSON.stringify(userData));
 
     setUser(userData);
     // navigate to the whiteboard page

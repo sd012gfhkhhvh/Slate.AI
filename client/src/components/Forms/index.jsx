@@ -5,13 +5,14 @@ import CreateRoom from "./CreateRoomForm";
 import JoinRoom from "./JoinRoomForm";
 import joinRoomImage from "../../assets/JoinRoomImage.webp";
 import logo from "../../assets/SlateAI-Logo.png";
+import { Outlet } from "react-router-dom";
 
 const Form = ({ socket, setUser }) => {
   const [isJoinRoomForm, setIsJoinRoomForm] = useState(false);
 
   useEffect(() => {
     console.log("form page");
-  });
+  }, []);
   return (
     <main className="flex justify-center h-[100vh] w-[100vw] items-center">
       <div className="h-full md:flex-1 bg-white  md:justify-end items-center md:flex hidden">
@@ -104,6 +105,7 @@ const Form = ({ socket, setUser }) => {
           )}
         </div>
       </div>
+      <Outlet />
     </main>
   );
 };
