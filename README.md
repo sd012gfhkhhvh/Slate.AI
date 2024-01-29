@@ -60,15 +60,15 @@ Slate.AI is a real-time collaborative whiteboarding web application, allowing mu
 ## Demo
 
 ### Landing Page
-<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateai-landingpage.png" />
+<img src="./client/src/assets/slateai-landingpage.png" />
 
 ### Create/Join Room Page
-<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateai-createroompage.png" />
+<img src="./client/src/assets/slateai-createroompage.png" />
 
 ### Whiteboard with realtime collaboration and Room Chat features
-<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/slateAI-canvas.png" />
-<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/canvas-2.png" />
-<img src="https://github.com/sd012gfhkhhvh/Slate.AI/blob/main/client/src/assets/chats.png" />
+<img src="./client/src/assets/slateAI-canvas.png" />
+<img src="./client/src/assets/canvas-2.png" />
+<img src="./client/src/assets/chats.png" />
 
 
 
