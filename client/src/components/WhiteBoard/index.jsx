@@ -5,6 +5,7 @@ import rough from "roughjs";
 import "./index.css";
 import { useContext, useEffect, useState } from "react";
 import { EraserSizeContext } from "../../context/EraserSize";
+import { useNavigate } from "react-router-dom";
 
 export const WhiteBoard = ({
   canvasRef,
@@ -16,6 +17,8 @@ export const WhiteBoard = ({
   socket,
   user,
 }) => {
+  const navigate = useNavigate();
+
   const { eraserSize } = useContext(EraserSizeContext);
   const [isDrawing, setIsdrawing] = useState(false);
 
@@ -73,6 +76,17 @@ export const WhiteBoard = ({
       ctx.clearRect(x1, y1, x2, y2);
     });
   }, [elements, socket]);
+
+  useEffect(() => {
+    // Check if this is the first load by seeing if our object exists in local storage
+    if (localStorage.getItem("firstLoadDone") === null) {
+      // If it's the first load, set the flag in local storage to true and reload the page
+      localStorage.setItem("firstLoadDone", 1);
+    } else {
+      localStorage.removeItem("firstLoadDone");
+      navigate("/form/leave");
+    }
+  }, []);
 
   //<----------Mouse events handles starts here---------- !>
 
