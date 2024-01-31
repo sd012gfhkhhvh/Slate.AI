@@ -71,6 +71,8 @@ export const RoomPage = ({ user, socket }) => {
 
   //handle Leave Room
   const handleLeaveRoom = () => {
+    localStorage.removeItem("socketUserData");
+    localStorage.removeItem("firstLoadDone");
     navigate("/");
   };
 

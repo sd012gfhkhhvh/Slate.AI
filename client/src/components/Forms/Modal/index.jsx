@@ -6,6 +6,8 @@ const Modal = () => {
   const userData = JSON.parse(localStorage.getItem("socketUserData"));
 
   const onClose = () => {
+    localStorage.removeItem("socketUserData");
+    localStorage.removeItem("firstLoadDone");
     navigate("/form");
   };
 
