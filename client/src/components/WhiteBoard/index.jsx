@@ -19,6 +19,12 @@ export const WhiteBoard = ({
 }) => {
   const navigate = useNavigate();
 
+  user = user?.roomId
+    ? user
+    : JSON.parse(localStorage.getItem("socketUserData"));
+
+  console.log(user);
+
   const { eraserSize } = useContext(EraserSizeContext);
   const [isDrawing, setIsdrawing] = useState(false);
 
