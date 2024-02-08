@@ -23,8 +23,6 @@ export const WhiteBoard = ({
     ? user
     : JSON.parse(localStorage.getItem("socketUserData"));
 
-  console.log(user);
-
   const { eraserSize } = useContext(EraserSizeContext);
   const [isDrawing, setIsdrawing] = useState(false);
 
@@ -76,8 +74,8 @@ export const WhiteBoard = ({
     socket.on("onErase", ({ x1, y1, x2, y2 }) => {
       console.log("onErase called");
 
-      // const canvas = document.getElementById("canvas");
-      const ctx = canvasRef.current.getContext("2d");
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
 
       ctx.clearRect(x1, y1, x2, y2);
     });
