@@ -107,6 +107,12 @@ export const RoomPage = ({ user, socket }) => {
     }
   };
 
+  //handle toggle of tools navigation bar
+
+  const openToolbar = () =>{
+    document.querySelector('.sidebar').classList.toggle('right-[20px]')
+  }
+
   return (
     <>
       {/* main div of canvas page */}
@@ -141,10 +147,16 @@ export const RoomPage = ({ user, socket }) => {
                 Leave Room
               </button>
             </div>
+            {/* mobile view toolbar */}
+            <div className="md:hidden relative text-4xl text-white self-end cursor-pointer" onClick={openToolbar}>
+              <i className="bi bi-pencil-square px-2 bg-gray-900 rounded-md"></i>
+            </div>
+<div className="md:h-full sidebar md:right-auto right-[-300px] md:border-none border md:top-0 top-[23%] md:bg-neutral-50 rounded-lg bg-[#1995D1] md:p-0 p-2 md:relative absolute md:overflow-hidden overflow-y-auto ">
+
 
             {/* Choose drawing element start */}
-            <div className="flex justify-center mt-10 items-center md:h-[80%] ">
-              <div className="flex  md:flex-col border-[1px] rounded-md border-black border-solid">
+            <div className="flex justify-center md:mt-10 m-0 items-center md:h-[80%] ">
+              <div className="flex flex-col  border-[1px] rounded-md border-black border-solid">
                 <div className="flex p-2 gap-2 items-center">
                   <img className="tool-logo" src={pencilIcon} alt="icon" />
                   <input
@@ -227,7 +239,7 @@ export const RoomPage = ({ user, socket }) => {
               </button>
             </div>
 
-            <div className="flex w-[100%] justify-between mt-4 items-center">
+            <div className="flex flex-col md:flex-row w-[100%] justify-between mt-4 items-center">
               {/* color picker for mobile view, hidden in desktop view */}
               <div className="md:hidden">
                 <div className="flex items-center">
@@ -243,8 +255,8 @@ export const RoomPage = ({ user, socket }) => {
               </div>
 
               {/* undo and redo button for mobile view, hidden in desktop view */}
-              <div className="flex  md:hidden justify-between items-center">
-                <div className="p-2 gap-2 justify-center md:hidden flex items-center w-[100%]">
+              <div className="flex md:hidden justify-between items-center">
+                <div className="p-2 gap-2 justify-center md:hidden flex md:flex-row flex-col items-center w-[100%]">
                   <button
                     className="p-2 rounded-md bg-[#4454b4] md:relative  text-white font-semibold"
                     onClick={handleUndo}
@@ -253,7 +265,7 @@ export const RoomPage = ({ user, socket }) => {
                     Undo
                   </button>
                   <button
-                    className="p-2 rounded-md border-[#4454b4] border-solid border-[1px] text-[#4454b4] font-semibold"
+                    className="p-2 rounded-md border-[#4454b4] border-solid border-[1px] text-white md:text-[#4454b4] font-semibold"
                     onClick={handleRedo}
                     disabled={removedElements.length <= 0}
                   >
@@ -264,7 +276,7 @@ export const RoomPage = ({ user, socket }) => {
             </div>
           </div>
         </div>
-
+</div>
         <div className="md:w-[65%] w-[90vw] md:h-[100%] h-[60%] my-3 md:my-0 md:max-h-[1000px]  flex flex-col justify-center md:max-w-[1500px] items-center">
           {/* Whiteboard Implementation */}
           <div className="w-[100%] h-[100%] border-4 my-2 border-black border-dotted rounded-md ">
