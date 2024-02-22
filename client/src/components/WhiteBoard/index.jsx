@@ -7,6 +7,12 @@ import { useContext, useEffect, useState } from "react";
 import { EraserSizeContext } from "../../context/EraserSize";
 import { useNavigate } from "react-router-dom";
 
+function isMobileDevice() {
+  const regex =
+    /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return regex.test(navigator.userAgent);
+}
+
 export const WhiteBoard = ({
   canvasRef,
   ctxRef,
@@ -25,6 +31,13 @@ export const WhiteBoard = ({
 
   const { eraserSize } = useContext(EraserSizeContext);
   const [isDrawing, setIsdrawing] = useState(false);
+  const [isMobile, setIsMobile] = useState(isMobileDevice());
+
+  // Checking for Mobile Device
+  useEffect(() => {
+    console.log(isMobile);
+    setIsMobile(isMobileDevice());
+  }, [navigator.userAgent]);
 
   //getting the canvas referance and context on component Mount
   useEffect(() => {
@@ -92,15 +105,38 @@ export const WhiteBoard = ({
     }
   }, []);
 
+  // TOuch Events for Mobile
+
+  const handleTouchStart = (e) => {
+    if (isMobile) {
+      const touch = e.touches[0];
+      handleMouseDown(touch.clientX, touch.clientY);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (isMobile) {
+      const touch = e.touches[0];
+      handleMouseMove(touch.clientX, touch.clientY);
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (isMobile) {
+      const touch = e.changedTouches[0];
+      const offsetX = touch.clientX;
+      const offsetY = touch.clientY;
+      handleMouseUp(offsetX, offsetY);
+    }
+  };
+
   //<----------Mouse events handles starts here---------- !>
 
   //< *MouseDown event / start of drawing event  !>
-  const handleMouseDown = (e) => {
-    // console.log(e);
-
+  const handleMouseDown = (offsetX, offsetY) => {
     //<----------------------- Pencil -------------------------------->
     if (tool === "pencil") {
-      const { offsetX, offsetY } = e.nativeEvent;
+      // const { offsetX, offsetY } = e.nativeEvent;
       console.log("mouse down" + "(" + offsetX + "," + offsetY + ")");
       setElements((prevElem) => [
         ...prevElem,
@@ -116,7 +152,7 @@ export const WhiteBoard = ({
 
     //<------------------------- Line -------------------------------->
     if (tool === "line") {
-      const { offsetX, offsetY } = e.nativeEvent;
+      // const { offsetX, offsetY } = e.nativeEvent;
       console.log("mouse down" + "(" + offsetX + "," + offsetY + ")");
       setElements((prevElem) => [
         ...prevElem,
@@ -133,7 +169,7 @@ export const WhiteBoard = ({
 
     //<---------------------------- Rectrangle -------------------------------->
     if (tool === "rect") {
-      const { offsetX, offsetY } = e.nativeEvent;
+      // const { offsetX, offsetY } = e.nativeEvent;
       console.log("mouse down" + "(" + offsetX + "," + offsetY + ")");
       setElements((prevElem) => [
         ...prevElem,
@@ -149,12 +185,12 @@ export const WhiteBoard = ({
   };
 
   // MouseMove event / Drawing is on progress --------------------------------
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (offsetX, offsetY) => {
     if (isDrawing) {
       const roughCanvas = rough.canvas(canvasRef.current);
       //---Pencil---
       if (tool === "pencil") {
-        const { offsetX, offsetY } = e.nativeEvent;
+        // const { offsetX, offsetY } = e.nativeEvent;
         // console.log("mouse move" + '(' + offsetX + ',' + offsetY + ')');
 
         //getting the path of the recent element
@@ -181,6 +217,7 @@ export const WhiteBoard = ({
           strokeColor: strokeColor,
           roomId: user?.roomId,
         });
+
         //draw the path
         roughCanvas.linearPath(newPath, {
           roughness: 0,
@@ -192,7 +229,7 @@ export const WhiteBoard = ({
       if (tool === "eraser") {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
-        const { offsetX, offsetY } = e.nativeEvent;
+        // const { offsetX, offsetY } = e.nativeEvent;
 
         const newPath = [
           offsetX - eraserSize / 2,
@@ -214,17 +251,16 @@ export const WhiteBoard = ({
   };
 
   //MouseUp event / End of drawing event
-  const handleMouseUp = (e) => {
+  const handleMouseUp = (offsetX, offsetY) => {
     const roughCanvas = rough.canvas(canvasRef.current);
 
-    const { offsetX, offsetY } = e.nativeEvent;
     console.log("mouse up" + "(" + offsetX + "," + offsetY + ")");
 
     //---Line---
     if (tool === "line") {
       const lastOffsetX = elements[elements.length - 1].offsetX;
       const lastOffsetY = elements[elements.length - 1].offsetY;
-      const { offsetX, offsetY } = e.nativeEvent;
+      // const { offsetX, offsetY } = e.nativeEvent;
       const newPath = [lastOffsetX, lastOffsetY, offsetX, offsetY];
       console.log("mouse move" + "(" + offsetX + "," + offsetY + ")");
 
@@ -260,7 +296,7 @@ export const WhiteBoard = ({
     if (tool === "rect") {
       const lastOffsetX = elements[elements.length - 1].offsetX;
       const lastOffsetY = elements[elements.length - 1].offsetY;
-      const { offsetX, offsetY } = e.nativeEvent;
+      // const { offsetX, offsetY } = e.nativeEvent;
       const newPath = [
         lastOffsetX,
         lastOffsetY,
@@ -310,9 +346,18 @@ export const WhiteBoard = ({
 
       {/* Canvas/Whiteboard starts here */}
       <div
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onMouseDown={(e) =>
+          handleMouseDown(e.nativeEvent.offsetX, e.nativeEvent.offsetY)
+        }
+        onMouseMove={(e) =>
+          handleMouseMove(e.nativeEvent.offsetX, e.nativeEvent.offsetY)
+        }
+        onMouseUp={(e) =>
+          handleMouseUp(e.nativeEvent.offsetX, e.nativeEvent.offsetY)
+        }
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={{ borderStyle: "dashed", borderColor: "gray" }}
         className="rounded-5 overflow-hidden"
       >
