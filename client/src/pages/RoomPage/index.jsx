@@ -29,6 +29,7 @@ export const RoomPage = ({ user, socket }) => {
   const [usersInRoom, setUsersInRoom] = useState([]); // array of users in a room
   const [isUserpanel, setIsUserPanel] = useState(false);
   const [isChatBox, setIsChatBox] = useState(false);
+  const [unreadMessages, setUnreadMessages] = useState(0);
 
   // update users state
   useEffect(() => {
@@ -58,7 +59,24 @@ export const RoomPage = ({ user, socket }) => {
         return prevUser.filter((user) => user.socketId !== socketId);
       });
     });
-  }, [socket, elements]);
+
+    // Listen for new messages and update unread message count
+    socket.on("onMessage", () => {
+      if (!isChatBox) {
+        setUnreadMessages((prevCount) => prevCount + 1);
+      }
+    });
+
+    // Clean up event listeners
+    return () => {
+      socket.off("userIsJoined");
+      socket.off("userJoinedRoom");
+      socket.off("onDisconnect");
+      socket.off("onMessage");
+    };
+  }, [socket, isChatBox]);
+
+    
 
   // handle clear canvas
   const handleClearCanvas = () => {
@@ -297,6 +315,8 @@ export const RoomPage = ({ user, socket }) => {
               user={user}
               setIsChatBox={setIsChatBox}
               setIsUserPanel={setIsUserPanel}
+              unreadMessages={unreadMessages}
+
             />
           )}
         </div>
@@ -322,6 +342,7 @@ export const RoomPage = ({ user, socket }) => {
                   e.preventDefault();
                   setIsUserPanel(true);
                   setIsChatBox(false);
+                  setUnreadMessages(0);
                 }}
               >
                 People
@@ -332,9 +353,15 @@ export const RoomPage = ({ user, socket }) => {
                   e.preventDefault();
                   setIsChatBox(true);
                   setIsUserPanel(false);
+                  setUnreadMessages(0);
                 }}
               >
                 Chat
+                {unreadMessages > 0 && (
+                  <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                    {unreadMessages}
+                  </span>
+                )}
               </button>
             </div>
           </div>
