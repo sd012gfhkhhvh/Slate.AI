@@ -67,14 +67,7 @@ export const RoomPage = ({ user, socket }) => {
       }
     });
 
-    // Clean up event listeners
-    return () => {
-      socket.off("userIsJoined");
-      socket.off("userJoinedRoom");
-      socket.off("onDisconnect");
-      socket.off("onMessage");
-    };
-  }, [socket, isChatBox]);
+  }, [socket, elements]);
 
     
 
