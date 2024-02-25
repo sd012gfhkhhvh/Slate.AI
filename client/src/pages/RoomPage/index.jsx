@@ -341,7 +341,7 @@ export const RoomPage = ({ user, socket }) => {
                 People
               </button>
               <button
-                className="p-2 rounded-md text-[#1995D1] border-[1px] border-solid border-[#1995d1] font-semibold"
+                className="p-2 rounded-md text-[#1995D1] border-[1px] border-solid border-[#1995d1] font-semibold relative"
                 onClick={(e) => {
                   e.preventDefault();
                   setIsChatBox(true);
@@ -351,7 +351,7 @@ export const RoomPage = ({ user, socket }) => {
               >
                 Chat
                 {unreadMessages > 0 && (
-                  <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                  <span className="absolute top-[-5px] right-[-5px] bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                     {unreadMessages}
                   </span>
                 )}
